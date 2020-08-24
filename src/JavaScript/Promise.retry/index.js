@@ -24,22 +24,22 @@
 // 方式二
 Promise.retry = function (fn, num) {
   return new Promise(async (resolve, reject) => {
-    while (num > 0) {
-      num--;
+    while (num) {
       try {
         const response = await fn();
         resolve(response);
       } catch (error) {
-        if (!num) {
+        if (num === 1) {
           reject(error);
         }
+        num--;
       }
     }
   });
 };
 
 Promise.retry(() => {
-  i++;
+  i++; // 加上这个就会重试失败
   return "retry";
 }, 10)
   .then((res) => {
