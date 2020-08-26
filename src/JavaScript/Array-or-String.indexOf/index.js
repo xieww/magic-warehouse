@@ -1,5 +1,8 @@
 function _indexOf(item, searchValue, start = 0) {
   const DATA_TYPE = typeof item;
+  if (DATA_TYPE !== "string" && !Array.isArray(item)) {
+    throw new TypeError("item should be array or string");
+  }
   if (DATA_TYPE === "string") {
     var regex = new RegExp(`${searchValue}`, "ig");
     regex.lastIndex = start;
@@ -43,3 +46,4 @@ console.log(
   "should be -1 ,result is ",
   _indexOf(["hello", "world", "orange", "apple"], "oranges")
 );
+console.log("should be -1 ,result is ", _indexOf({}, "oranges"));
