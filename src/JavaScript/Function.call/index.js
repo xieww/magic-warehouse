@@ -21,7 +21,7 @@ Function.prototype._call = function (context) {
   return result;
 };
 
-// 测试
+// 测试案例
 var value = 2;
 var obj = {
   value: 1,
