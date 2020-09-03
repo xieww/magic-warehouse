@@ -4,9 +4,15 @@
  */
 Function.prototype._call = function (context, ...args) {
   context = context ? context : typeof window === "undefined" ? global : window;
-  context.__fn__ = this;
-  let result = context.__fn__(...args);
-  delete context.__fn__;
+  // context.__fn__ = this;
+  // let result = context.__fn__(...args);
+  // delete context.__fn__;
+  // return result;
+
+  const fn = Symbol()
+  context[fn] = this;
+  var result =  context[fn](...args)
+  Reflect.deleteProperty(context, fn)
   return result;
 };
 
