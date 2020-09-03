@@ -1,4 +1,27 @@
-Function.prototype._apply = function (context, arr) {
+// Function.prototype._apply = function (context, arr) {
+//   var context = context
+//     ? context
+//     : typeof window === "undefined"
+//     ? global
+//     : window;
+//   context.fn = this;
+
+//   var result;
+//   if (!arr) {
+//     result = context.fn();
+//   } else {
+//     var args = [];
+//     for (var i = 0, len = arr.length; i < len; i++) {
+//       args.push("arr[" + i + "]");
+//     }
+//     result = eval("context.fn(" + args + ")");
+//   }
+
+//   delete context.fn;
+//   return result;
+// };
+
+Function.prototype._apply = function (context) {
   var context = context
     ? context
     : typeof window === "undefined"
@@ -7,14 +30,14 @@ Function.prototype._apply = function (context, arr) {
   context.fn = this;
 
   var result;
-  if (!arr) {
-    result = context.fn();
-  } else {
+  if (arguments && arguments[1]) {
     var args = [];
-    for (var i = 0, len = arr.length; i < len; i++) {
-      args.push("arr[" + i + "]");
+    for (var i = 0, len = arguments[1].length; i < len; i++) {
+      args.push("arguments[1][" + i + "]");
     }
     result = eval("context.fn(" + args + ")");
+  } else {
+    result = context.fn();
   }
 
   delete context.fn;
@@ -25,9 +48,7 @@ Function.prototype._apply = function (context, arr) {
 const numbers = [5, 6, 2, 3, 7];
 
 const max = Math.max._apply(null, numbers);
-console.log(max);// expected output: 7
-
+console.log(max); // expected output: 7
 
 const min = Math.min._apply(null, numbers);
 console.log(min); // expected output: 2
-
