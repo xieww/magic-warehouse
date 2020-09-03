@@ -3,7 +3,7 @@
  * @param {*} context 
  */
 Function.prototype._call = function (context) {
-  var context = context
+  context = context
     ? context
     : typeof window === "undefined"
     ? global
