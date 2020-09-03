@@ -1,3 +1,8 @@
+/**
+ * 模拟实现apply方法
+ * @param {*} context 
+ * @param {*} arr 
+ */
 // Function.prototype._apply = function (context, arr) {
 //   context = context ? context : typeof window === "undefined" ? global : window;
 //   context.fn = this;

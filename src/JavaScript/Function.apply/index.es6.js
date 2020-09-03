@@ -1,3 +1,8 @@
+/**
+ * ES6版apply方法
+ * @param {*} context 
+ * @param {*} args 
+ */
 Function.prototype._apply = function (context, args) {
   context = context ? context : typeof window === "undefined" ? global : window;
   context.__fn__ = this;

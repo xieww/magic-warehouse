@@ -1,6 +1,8 @@
 /**
  * 支持浏览器和node环境
- * @param {*} context
+ * 模拟实现call方法
+ * @param {*} context 
+ * @param  {...any} args 
  */
 Function.prototype._call = function (context, ...args) {
   context = context ? context : typeof window === "undefined" ? global : window;
