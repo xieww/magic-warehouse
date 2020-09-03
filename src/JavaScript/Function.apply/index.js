@@ -1,9 +1,5 @@
 // Function.prototype._apply = function (context, arr) {
-//   context = context
-//     ? context
-//     : typeof window === "undefined"
-//     ? global
-//     : window;
+//   context = context ? context : typeof window === "undefined" ? global : window;
 //   context.fn = this;
 
 //   var result;
@@ -22,11 +18,7 @@
 // };
 
 Function.prototype._apply = function (context) {
-  context = context
-    ? context
-    : typeof window === "undefined"
-    ? global
-    : window;
+  context = context ? context : typeof window === "undefined" ? global : window;
   context.fn = this;
 
   var result;

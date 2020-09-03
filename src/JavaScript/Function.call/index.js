@@ -1,13 +1,9 @@
 /**
  * 支持浏览器和node环境
- * @param {*} context 
+ * @param {*} context
  */
 Function.prototype._call = function (context) {
-  context = context
-    ? context
-    : typeof window === "undefined"
-    ? global
-    : window;
+  context = context ? context : typeof window === "undefined" ? global : window;
   context.fn = this;
 
   var args = [];
