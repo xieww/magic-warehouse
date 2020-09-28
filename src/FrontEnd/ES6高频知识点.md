@@ -315,7 +315,7 @@ define(["./a", "./b"], function (a, b) {
 ```
 
 [AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD)  
-[CMD 规范](https://link.zhihu.com/?target=https%3A//github.com/seajs/seajs/issues/242)
+[CMD 规范](https://github.com/seajs/seajs/issues/242)
 
 ### CommonJS
 
