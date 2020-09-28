@@ -1,6 +1,10 @@
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=3 orderedList=false} -->
+
 # ES6 高频知识点
 
-## 什么是提升？什么是暂时性死区？var、let 及 const 区别？
+## var、let 及 const 区别
+
+> 什么是提升？什么是暂时性死区？var、let 及 const 区别？
 
 > 对于这个问题，我们应该先来了解提升（hoisting）这个概念。
 
@@ -98,3 +102,76 @@ test1();
 - `var` 存在提升，我们能在声明之前使用。`let`、`const` 因为暂时性死区的原因，不能在声明前使用
 - `var` 在全局作用域下声明变量会导致变量挂载在 window 上，其他两者不会
 - `let` 和 `const` 作用基本一致，但是后者声明的变量不能再次赋值
+
+## 原型继承和 Class 继承
+
+> 原型如何实现继承？Class 如何实现继承？Class 本质是什么？
+
+首先先来讲下 `class`，其实在 JS 中并不存在类，`class` 只是语法糖，本质还是函数。
+
+```js
+class Person {}
+Person instanceof Function; // true
+```
+
+在上一章节中我们讲解了原型的知识点，在这一小节中我们将会分别使用原型和 `class` 的方式来实现继承。
+
+### 组合继承
+
+组合继承是最常用的继承方式，
+
+```js
+function Parent(value) {
+  this.val = value;
+}
+Parent.prototype.getValue = function () {
+  console.log(this.val);
+};
+function Child(value) {
+  Parent.call(this, value);
+}
+Child.prototype = new Parent();
+
+const child = new Child(1);
+
+child.getValue(); // 1
+child instanceof Parent; // true
+```
+
+以上继承的方式核心是在子类的构造函数中通过 `Parent.call(this)` 继承父类的属性，然后改变子类的原型为 `new Parent()` 来继承父类的函数。
+
+这种继承方式优点在于构造函数可以传参，不会与父类引用属性共享，可以复用父类的函数，但是也存在一个缺点就是在继承父类函数的时候调用了父类构造函数，导致子类的原型上多了不需要的父类属性，存在内存上的浪费。
+
+![图片](./image/3.png)
+
+### 寄生组合继承
+
+这种继承方式对组合继承进行了优化，组合继承缺点在于继承父类函数时调用了构造函数，我们只需要优化掉这点就行了。
+
+```js
+function Parent(value) {
+  this.val = value;
+}
+
+Parent.prototype.getValue = function () {
+  console.log(this.val);
+};
+
+function Child(value) {
+  Parent.call(this, value);
+}
+
+Child.prototype = Object.create(Parent.prototype, {
+  constructor: {
+    value: Child,
+    enumerable: false,
+    writable: true,
+    configurable: true,
+  },
+});
+
+const child = new Child(1);
+
+child.getValue(); // 1
+child instanceof Parent; // true
+```
