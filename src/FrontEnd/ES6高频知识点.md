@@ -12,7 +12,7 @@
     - [CommonJS](#commonjs)
     - [ES Module](#es-module)
   - [Proxy](#proxy)
-  - [map,filter,reduce](#mapfilterreduce)
+  - [数组的map,filter,reduce](#数组的mapfilterreduce)
 
 # ES6 高频知识点
 
@@ -428,7 +428,7 @@ p.a; // 'a' = 2
 
 当然这是简单版的响应式实现，如果需要实现一个 Vue 中的响应式，需要我们在 `get` 中收集依赖，在 `set` 派发更新，之所以 Vue3.0 要使用 `Proxy` 替换原本的 API 原因在于 `Proxy` 无需一层层递归为每个属性添加代理，一次即可完成以上操作，性能上更好，并且原本的实现有一些数据更新不能监听到，但是 `Proxy` 可以完美监听到任何方式的数据改变，唯一缺陷可能就是浏览器的兼容性不好了。
 
-## map,filter,reduce
+## 数组的map,filter,reduce
 
 > map, filter, reduce 各自有什么作用？
 
