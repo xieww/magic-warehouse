@@ -1,4 +1,17 @@
-<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=3 orderedList=false} -->
+- [ES6 高频知识点](#es6-高频知识点)
+  - [var、let 及 const 区别](#varlet-及-const-区别)
+  - [原型继承和 Class 继承](#原型继承和-class-继承)
+    - [借助 call 实现继承](#借助-call-实现继承)
+    - [借助原型链实现继承](#借助原型链实现继承)
+    - [组合继承](#组合继承)
+    - [寄生组合继承](#寄生组合继承)
+    - [Class 继承](#class-继承)
+  - [模块化](#模块化)
+    - [立即执行函数（IIFE）](#立即执行函数iife)
+    - [AMD 和 CMD](#amd-和-cmd)
+    - [CommonJS](#commonjs)
+    - [ES Module](#es-module)
+  - [Proxy](#proxy)
 
 # ES6 高频知识点
 
@@ -116,6 +129,51 @@ Person instanceof Function; // true
 
 在上一章节中我们讲解了原型的知识点，在这一小节中我们将会分别使用原型和 `class` 的方式来实现继承。
 
+### 借助 call 实现继承
+
+```js
+function Parent() {
+  this.name = "parent1";
+}
+function Child() {
+  Parent1.call(this);
+  this.type = "child";
+}
+console.log(new Child());
+```
+
+这样写的时候子类虽然能够拿到父类的属性值，但是问题是父类原型对象中一旦存在方法那么子类无法继承。那么引出下面的方法。
+
+### 借助原型链实现继承
+
+```js
+function Parent() {
+  this.name = "parent";
+  this.play = [1, 2, 3];
+}
+function Child() {
+  this.type = "child";
+}
+Child.prototype = new Parent();
+
+console.log(new Child());
+```
+
+看似没有问题，父类的方法和属性都能够访问，但实际上有一个潜在的不足。举个例子：
+
+```js
+var s1 = new Child();
+var s2 = new Child();
+s1.play.push(4);
+console.log(s1.play, s2.play);
+```
+
+![图片](./image/5.jpg)
+
+明明我只改变了 s1 的 play 属性，为什么 s2 也跟着变了呢？很简单，因为两个实例使用的是同一个原型对象。
+
+那么还有更好的方式么？
+
 ### 组合继承
 
 组合继承是最常用的继承方式，
@@ -174,4 +232,193 @@ const child = new Child(1);
 
 child.getValue(); // 1
 child instanceof Parent; // true
+```
+
+![图片](./image/4.png)
+
+### Class 继承
+
+以上两种继承方式都是通过原型去解决的，在 ES6 中，我们可以使用 `class` 去实现继承，并且实现起来很简单
+
+```js
+class Parent {
+  constructor(value) {
+    this.val = value;
+  }
+  getValue() {
+    console.log(this.val);
+  }
+}
+class Child extends Parent {
+  constructor(value) {
+    super(value);
+    this.val = value;
+  }
+}
+let child = new Child(1);
+child.getValue(); // 1
+child instanceof Parent; // true
+```
+
+`class` 实现继承的核心在于使用 `extends` 表明继承自哪个父类，并且在子类构造函数中必须调用 `super`，因此这段代码可以看成 `Parent.call(this, value)`。
+
+当然了，之前也说了在 JS 中并不存在类，`class` 的本质就是函数。
+
+## 模块化
+
+> 为什么要使用模块化？都有哪几种方式可以实现模块化，各有什么特点？
+
+使用一个技术肯定是有原因的，那么使用模块化可以给我们带来以下好处
+
+- 解决命名冲突
+- 提供复用性
+- 提高代码可维护性
+
+### 立即执行函数（IIFE）
+
+在早期，使用立即执行函数实现模块化是常见的手段，通过函数作用域解决了命名冲突、污染全局作用域的问题
+
+```js
+(function (globalVariable) {
+  globalVariable.test = function () {};
+  // ... 声明各种变量、函数都不会污染全局作用域
+})(globalVariable);
+```
+
+### AMD 和 CMD
+
+AMD 是 RequireJS 在推广过程中对模块定义的规范化产出。
+
+CMD 是 SeaJS 在推广过程中对模块定义的规范化产出。
+
+1. 对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.
+2. CMD 推崇依赖就近，AMD 推崇依赖前置。
+
+```js
+// CMD
+define(function (require, exports, module) {
+  // 加载模块
+  // 可以把 require 写在函数体的任意地方实现延迟加载
+  var a = require("./a");
+  a.doSomething();
+  var b = require("./b"); // 依赖可以就近书写
+  b.doSomething(); // ...
+});
+
+// AMD 默认推荐的是
+define(["./a", "./b"], function (a, b) {
+  // 依赖必须一开始就写好
+  a.doSomething();
+  b.doSomething();
+});
+```
+
+[AMD 规范](https://github.com/amdjs/amdjs-api/wiki/AMD)  
+[CMD 规范](https://link.zhihu.com/?target=https%3A//github.com/seajs/seajs/issues/242)
+
+### CommonJS
+
+CommonJS 最早是 Node 在使用，目前也仍然广泛使用，比如在 Webpack 中你就能见到它，当然目前在 Node 中的模块管理已经和 CommonJS 有一些区别了。
+
+```js
+// a.js
+module.exports = {
+  a: 1,
+};
+// or
+exports.a = 1;
+
+// b.js
+var module = require("./a.js");
+module.a; // -> log 1
+```
+
+细说 requre
+
+```js
+var module = require("./a.js");
+module.a;
+// 这里其实就是包装了一层立即执行函数，这样就不会污染全局变量了，
+// 重要的是 module 这里，module 是 Node 独有的一个变量
+module.exports = {
+  a: 1,
+};
+// module 基本实现
+var module = {
+  id: "xxxx", // 我总得知道怎么去找到他吧
+  exports: {}, // exports 就是个空对象
+};
+// 这个是为什么 exports 和 module.exports 用法相似的原因
+var exports = module.exports;
+var load = function (module) {
+  // 导出的东西
+  var a = 1;
+  module.exports = a;
+  return module.exports;
+};
+// 然后当我 require 的时候去找到独特的
+// id，然后将要使用的东西用立即执行函数包装下，over
+```
+
+另外虽然 `exports` 和 `module.exports` 用法相似，但是不能对 `exports` 直接赋值。因为 `var exports = module.exports` 这句代码表明了 `exports` 和 `module.exports` 享有相同地址，通过改变对象的属性值会对两者都起效，但是如果直接对 `exports` 赋值就会导致两者不再指向同一个内存地址，修改并不会对 `module.exports` 起效。
+
+### ES Module
+
+ES Module 是原生实现的模块化方案，与 CommonJS 有以下几个区别
+
+- CommonJS 支持动态导入，也就是 `require(\${path}/xx.js)`，后者目前不支持，但是已有提案
+- CommonJS 是同步导入，因为用于服务端，文件都在本地，同步导入即使卡住主线程影响也不大。而后者是异步导入，因为用于浏览器，需要下载文件，如果也采用同步导入会对渲染有很大影响
+- CommonJS 在导出时都是值拷贝，就算导出的值变了，导入的值也不会改变，所以如果想更新值，必须重新导入一次。但是 ES Module 采用实时绑定的方式，导入导出的值都指向同一个内存地址，所以导入值会跟随导出值变化
+- ES Module 会编译成 `require/exports` 来执行的
+
+```js
+// 引入模块 API
+import XXX from "./a.js";
+import { XXX } from "./a.js";
+// 导出模块 API
+export function a() {}
+export default function () {}
+```
+
+## Proxy
+
+> Proxy 可以实现什么功能？
+
+在 Vue3.0 中会通过 `Proxy` 来替换原本的 `Object.defineProperty` 来实现数据响应式。 `Proxy` 是 `ES6` 中新增的功能，它可以用来自定义对象中的操作。
+
+```js
+let p = new Proxy(target, handler);
+```
+
+`target` 代表需要添加代理的对象，`handler` 用来自定义对象中的操作，比如可以用来自定义 `set` 或者 `get` 函数。
+
+接下来我们通过 `Proxy` 来实现一个数据响应式
+
+```js
+let onWatch = (obj, setBind, getLogger) => {
+  let handler = {
+    get(target, property, receiver) {
+      getLogger(target, property);
+      return Reflect.get(target, property, receiver);
+    },
+    set(target, property, value, receiver) {
+      setBind(value, property);
+      return Reflect.set(target, property, value);
+    },
+  };
+  return new Proxy(obj, handler);
+};
+
+let obj = { a: 1 };
+let p = onWatch(
+  obj,
+  (v, property) => {
+    console.log(`监听到属性${property}改变为${v}`);
+  },
+  (target, property) => {
+    console.log(`'${property}' = ${target[property]}`);
+  }
+);
+p.a = 2; // 监听到属性a改变
+p.a; // 'a' = 2
 ```
