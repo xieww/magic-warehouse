@@ -230,7 +230,7 @@ console.log("1", a); // -> '1' 1
 
 > setTimeout、setInterval、requestAnimationFrame 各有什么特点？
 
-异步编程当然少不了定时器了，常见的定时器函数有` setTimeout、setInterval、requestAnimationFrame`。我们先来讲讲最常用的 `setTimeout`，很多人认为 `setTimeout` 是延时多久，那就应该是多久后执行。
+异步编程当然少不了定时器了，常见的定时器函数有`setTimeout、setInterval、requestAnimationFrame`。我们先来讲讲最常用的 `setTimeout`，很多人认为 `setTimeout` 是延时多久，那就应该是多久后执行。
 
 其实这个观点是错误的，因为 JS 是单线程执行的，如果前面的代码影响了性能，就会导致 `setTimeout` 不会按期执行。当然了，我们可以通过代码去修正 `setTimeout`，从而使定时器相对准确
 
