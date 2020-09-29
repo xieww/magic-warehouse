@@ -3,6 +3,8 @@
   - [回调函数（Callback）](#回调函数callback)
   - [Generator](#generator)
   - [Promise](#promise)
+  - [async 及 await](#async-及-await)
+  - [常用定时器函数](#常用定时器函数)
 
 # JS 异步编程
 
@@ -119,7 +121,7 @@ let result3 = it.next();
 2. 完成了 （resolved）
 3. 拒绝了（rejected）
 
-这个承诺一旦从等待状态变成为其他状态就永远不能更改状态了，也就是说一旦状态变为 `resolved` 后，就不能再次改变
+这个承诺一旦从等待状态变成为其他状态就永远不能更改状态了，也就是说一旦状态变为 `resolved`或者`rejected` 后，就不能再次改变
 
 ```js
 new Promise((resolve, reject) => {
@@ -169,3 +171,148 @@ ajax(url)
 ```
 
 前面都是在讲述 `Promise` 的一些优点和特点，其实它也是存在一些缺点的，比如无法取消 `Promise`，错误需要通过回调函数捕获。
+
+## async 及 await
+
+> async 及 await 的特点，它们的优点和缺点分别是什么？await 原理是什么？
+
+一个函数如果加上 `async` ，那么该函数就会返回一个 `Promise`
+
+```js
+async function test() {
+  return "1";
+}
+console.log(test()); // -> Promise {<resolved>: "1"}
+```
+
+`async` 就是将函数返回值使用 `Promise.resolve()` 包裹了下，和 `then` 中处理返回值一样，并且 `await` 只能配套 `async` 使用
+
+```js
+async function test() {
+  let value = await sleep();
+}
+```
+
+`async` 和 `await` 可以说是异步终极解决方案了，相比直接使用 `Promise` 来说，优势在于处理 `then` 的调用链，能够更清晰准确的写出代码，毕竟写一大堆 `then` 也很恶心，并且也能优雅地解决回调地狱问题。当然也存在一些缺点，因为 `await` 将异步代码改造成了同步代码，如果多个异步代码没有依赖性却使用了 `await` 会导致性能上的降低。
+
+```js
+async function test() {
+  // 以下代码没有依赖性的话，完全可以使用 Promise.all 的方式
+  // 如果有依赖性的话，其实就是解决回调地狱的例子了
+  await fetch(url);
+  await fetch(url1);
+  await fetch(url2);
+}
+```
+
+下面来看一个使用 await 的例子：
+
+```js
+let a = 0;
+let b = async () => {
+  a = a + (await 10);
+  console.log("2", a); // -> '2' 10
+};
+b();
+a++;
+console.log("1", a); // -> '1' 1
+```
+
+对于以上代码你可能会有疑惑，让我来解释下原因：
+
+1. 首先函数 `b` 先执行，在执行到 `await 10` 之前变量 `a` 还是 `0`，因为 `await` 内部实现了 `generator` ，`generator` 会保留堆栈中东西，所以这时候 `a = 0` 被保存了下来
+2. 因为 `await` 是异步操作，后来的表达式不返回 `Promise` 的话，就会包装成 `Promise.reslove(返回值)`，然后会去执行函数外的同步代码
+3. 同步代码执行完毕后开始执行异步代码，将保存下来的值拿出来使用，这时候 `a = 0 + 10`
+
+上述解释中提到了 `await` 内部实现了 `generator`，其实 `await` 就是 `generator` 加上 `Promise` 的语法糖，且内部实现了自动执行 `generator`。如果你熟悉 `co` 的话，其实自己就可以实现这样的语法糖。
+
+## 常用定时器函数
+
+> setTimeout、setInterval、requestAnimationFrame 各有什么特点？
+
+异步编程当然少不了定时器了，常见的定时器函数有` setTimeout、setInterval、requestAnimationFrame`。我们先来讲讲最常用的 `setTimeout`，很多人认为 `setTimeout` 是延时多久，那就应该是多久后执行。
+
+其实这个观点是错误的，因为 JS 是单线程执行的，如果前面的代码影响了性能，就会导致 `setTimeout` 不会按期执行。当然了，我们可以通过代码去修正 `setTimeout`，从而使定时器相对准确
+
+```js
+let period = 60 * 1000 * 60 * 2;
+let startTime = new Date().getTime();
+let count = 0;
+let end = new Date().getTime() + period;
+let interval = 1000;
+let currentInterval = interval;
+
+function loop() {
+  count++;
+  // 代码执行所消耗的时间
+  let offset = new Date().getTime() - (startTime + count * interval);
+  let diff = end - new Date().getTime();
+  let h = Math.floor(diff / (60 * 1000 * 60));
+  let hdiff = diff % (60 * 1000 * 60);
+  let m = Math.floor(hdiff / (60 * 1000));
+  let mdiff = hdiff % (60 * 1000);
+  let s = mdiff / 1000;
+  let sCeil = Math.ceil(s);
+  let sFloor = Math.floor(s);
+  // 得到下一次循环所消耗的时间
+  currentInterval = interval - offset;
+  console.log(
+    "时：" + h,
+    "分：" + m,
+    "毫秒：" + s,
+    "秒向上取整：" + sCeil,
+    "代码执行时间：" + offset,
+    "下次循环间隔" + currentInterval
+  );
+
+  setTimeout(loop, currentInterval);
+}
+
+setTimeout(loop, currentInterval);
+```
+
+接下来我们来看 `setInterval`，其实这个函数作用和 `setTimeout` 基本一致，只是该函数是每隔一段时间执行一次回调函数。
+
+通常来说不建议使用 `setInterval`。第一，它和 `setTimeout` 一样，不能保证在预期的时间执行任务。第二，它存在执行累积的问题，请看以下伪代码
+
+```js
+function demo() {
+  setInterval(function () {
+    console.log(2);
+  }, 1000);
+  sleep(2000);
+}
+demo();
+```
+
+以上代码在浏览器环境中，如果定时器执行过程中出现了耗时操作，多个回调函数会在耗时操作结束以后同时执行，这样可能就会带来性能上的问题。
+
+如果你有循环定时器的需求，其实完全可以通过 `requestAnimationFrame` 来实现
+
+```js
+function setInterval(callback, interval) {
+  let timer;
+  const now = Date.now;
+  let startTime = now();
+  let endTime = startTime;
+  const loop = () => {
+    timer = window.requestAnimationFrame(loop);
+    endTime = now();
+    if (endTime - startTime >= interval) {
+      startTime = endTime = now();
+      callback(timer);
+    }
+  };
+  timer = window.requestAnimationFrame(loop);
+  return timer;
+}
+
+let a = 0;
+setInterval((timer) => {
+  console.log(1);
+  a++;
+  if (a === 3) cancelAnimationFrame(timer);
+}, 1000);
+```
+
+首先 `requestAnimationFrame` 自带函数节流功能，基本可以保证在 `16.6` 毫秒内只执行一次（不掉帧的情况下），并且该函数的延时效果是精确的，没有其他定时器时间不准的问题，当然你也可以通过该函数来实现 `setTimeout`。
