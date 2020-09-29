@@ -1,3 +1,9 @@
+- [JS 异步编程](#js-异步编程)
+  - [并发（concurrency）和并行（parallelism）区别](#并发concurrency和并行parallelism区别)
+  - [回调函数（Callback）](#回调函数callback)
+  - [Generator](#generator)
+  - [Promise](#promise)
+
 # JS 异步编程
 
 ## 并发（concurrency）和并行（parallelism）区别
@@ -82,3 +88,84 @@ console.log(it.next()); // => {value: 6, done: false}
 console.log(it.next(12)); // => {value: 8, done: false}
 console.log(it.next(13)); // => {value: 42, done: true}
 ```
+
+你也许会疑惑为什么会产生与你预想不同的值，接下来就让我为你逐行代码分析原因
+
+- 首先 `Generator` 函数调用和普通函数不同，它会返回一个迭代器
+- 当执行第一次 `next` 时，传参会被忽略，并且函数暂停在 `yield (x + 1)` 处，所以返回 `5 + 1 = 6`
+- 当执行第二次 `next` 时，传入的参数等于上一个 `yield` 的返回值，如果你不传参，`yield` 永远返回 `undefined`。此时 `let y = 2 * 12`，所以第二个 `yield` 等于 `2 * 12 / 3 = 8`
+- 当执行第三次 `next` 时，传入的参数会传递给 `z`，所以 `z = 13, x = 5, y = 24`，相加等于 `42`
+  `Generator` 函数一般见到的不多，其实也于他有点绕有关系，并且一般会配合 `co` 库去使用。当然，我们可以通过 `Generator` 函数解决回调地狱的问题，可以把之前的回调地狱例子改写为如下代码：
+
+```js
+function* fetch() {
+  yield ajax(url, () => {});
+  yield ajax(url1, () => {});
+  yield ajax(url2, () => {});
+}
+let it = fetch();
+let result1 = it.next();
+let result2 = it.next();
+let result3 = it.next();
+```
+
+## Promise
+
+> Promise 的特点是什么，分别有什么优缺点？什么是 Promise 链？Promise 构造函数执行和 then 函数执行有什么区别？
+
+`Promise` 翻译过来就是承诺的意思，这个承诺会在未来有一个确切的答复，并且该承诺有三种状态，分别是：
+
+1. 等待中（pending）
+2. 完成了 （resolved）
+3. 拒绝了（rejected）
+
+这个承诺一旦从等待状态变成为其他状态就永远不能更改状态了，也就是说一旦状态变为 `resolved` 后，就不能再次改变
+
+```js
+new Promise((resolve, reject) => {
+  resolve("success");
+  // 无效
+  reject("reject");
+});
+```
+
+当我们在构造 `Promise` 的时候，构造函数内部的代码是立即执行的
+
+```js
+new Promise((resolve, reject) => {
+  console.log("new Promise");
+  resolve("success");
+});
+console.log("finifsh");
+// new Promise -> finifsh
+```
+
+`Promise` 实现了链式调用，也就是说每次调用 `then` 之后返回的都是一个 `Promise`，并且是一个全新的 `Promise`，原因也是因为状态不可变。如果你在 `then` 中 使用了 `return`，那么 `return` 的值会被 `Promise.resolve()` 包装
+
+```js
+Promise.resolve(1)
+  .then((res) => {
+    console.log(res); // => 1
+    return 2; // 包装成 Promise.resolve(2)
+  })
+  .then((res) => {
+    console.log(res); // => 2
+  });
+```
+
+当然了，`Promise` 也很好地解决了回调地狱的问题，可以把之前的回调地狱例子改写为如下代码：
+
+```js
+ajax(url)
+  .then((res) => {
+    console.log(res);
+    return ajax(url1);
+  })
+  .then((res) => {
+    console.log(res);
+    return ajax(url2);
+  })
+  .then((res) => console.log(res));
+```
+
+前面都是在讲述 `Promise` 的一些优点和特点，其实它也是存在一些缺点的，比如无法取消 `Promise`，错误需要通过回调函数捕获。
