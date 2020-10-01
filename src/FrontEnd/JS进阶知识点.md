@@ -234,7 +234,7 @@ V8 实现了准确式 GC，GC 算法采用了分代式垃圾回收机制。因�
 
 老生代中的空间很复杂，有如下几个空间
 
-```js
+```C++
 enum AllocationSpace {
   // TODO(v8:7464): Actually map this space's memory as read-only.
   RO_SPACE,    // 不变的对象空间
