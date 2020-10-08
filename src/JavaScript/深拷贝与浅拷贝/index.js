@@ -55,9 +55,9 @@ console.log("a", a);
 console.log("b", b);
 console.log("c", c);
 // console.log("浅拷贝", Object.assign({}, a));
-// console.log("浅拷贝", JSON.parse(JSON.stringify(a)));
+// console.log("深拷贝", JSON.parse(JSON.stringify(a)));
 // console.log(
 //   "浅拷贝",
 //   Array.isArray(test1) ? [...test1] : Object.assign({}, test1)
 // );
-// console.log("浅拷贝", JSON.parse(JSON.stringify(test1)));
+// console.log("深拷贝", JSON.parse(JSON.stringify(test1)));
