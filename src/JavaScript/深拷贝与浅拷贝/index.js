@@ -18,7 +18,6 @@ function deepCopy(obj) {
 
 function deepClone(targetObj) {
   let type = Object.prototype.toString.call(targetObj);
-  console.log("type", type);
   let newObj;
   if (type === "[object Object]") {
     newObj = {};
