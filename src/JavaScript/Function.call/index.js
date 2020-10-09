@@ -3,6 +3,9 @@
  * @param {*} context
  */
 Function.prototype._call = function (context) {
+  if (typeof this !== "function") {
+    throw new TypeError(`${this}._call is not a function`);
+  }
   context = context ? context : typeof window === "undefined" ? global : window;
   context.fn = this;
 
