@@ -93,7 +93,7 @@ Function.prototype.myBind = function (context) {
 
 > new 的原理是什么？通过 new 的方式创建对象和通过字面量创建有什么区别？
 
-在调用 `new` 的过程中会发生以上四件事情：
+在调用 `new` 的过程中会发生以下四件事情：
 
 1. 新生成了一个对象
 2. 链接到原型
