@@ -17,3 +17,8 @@ binaryTree.inOrderTraverse(binaryTree.root, Log);
 
 console.log("后序遍历");
 binaryTree.postOrderTraverse(binaryTree.root, Log);
+
+console.log("最大值", binaryTree.max());
+console.log("最小值", binaryTree.min());
+console.log("查找6", binaryTree.search(6));
+console.log("查找20", binaryTree.search(20));

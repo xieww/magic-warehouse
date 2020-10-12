@@ -189,9 +189,9 @@ class BinaryTree {
       return false;
     }
     if (val < node.val) {
-      return searchNode(node.left, val);
+      return this.searchNode(node.left, val);
     } else if (val > node.val) {
-      return searchNode(node.right, val);
+      return this.searchNode(node.right, val);
     } else {
       return true;
     }
@@ -206,7 +206,7 @@ class BinaryTree {
    * @memberof BinaryTree
    */
   search(val) {
-    return searchNode(root, val);
+    return this.searchNode(this.root, val);
   }
 }
 
