@@ -175,18 +175,39 @@ class BinaryTree {
   }
 
   /**
-   * @description 前序遍历
+   * @description 前序遍历，递归
    * @author xieww
    * @date 2020-10-12
    * @param {*} root
    * @param {function} callback
    * @memberof BinaryTree
    */
-  preorderTraversal(root, callback) {
+  preOrderTraversalByRecursion(root, callback) {
     if (root !== null) {
       callback(root.val);
-      this.preorderTraversal(root.left, callback);
-      this.preorderTraversal(root.right, callback);
+      this.preOrderTraversalByRecursion(root.left, callback);
+      this.preOrderTraversalByRecursion(root.right, callback);
+    }
+  }
+
+  /**
+   * @description 前序遍历无递归实现
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} [node=this.root]
+   * @memberof BinaryTree
+   */
+  preOrderTraversal(node = this.root) {
+    let stack = []; // 算法需要借助一个栈
+    while (node || stack.length) {
+      // 当节点存在或者栈不空时
+      if (node) {
+        stack.push(node); // 根节点入栈，这是为了到时候能找该节点的右节点
+        node = node.left; // 先遍历左子树
+      } else {
+        node = stack.pop(); // 弹出根节点
+        node = node.right; // 遍历根节点的右子树
+      }
     }
   }
 
@@ -228,18 +249,71 @@ class BinaryTree {
   }
 
   /**
-   * @description 后序遍历
+   * @description 后序遍历，递归
    * @author xieww
    * @date 2020-10-12
    * @param {*} root
    * @param {function} callback
    * @memberof BinaryTree
    */
-  postOrderTraverse(root, callback) {
+  postOrderTraverseByRecursion(root, callback) {
     if (root !== null) {
-      this.postOrderTraverse(root.left, callback);
-      this.postOrderTraverse(root.right, callback);
+      this.postOrderTraverseByRecursion(root.left, callback);
+      this.postOrderTraverseByRecursion(root.right, callback);
       callback(root.val);
+    }
+  }
+
+  /**
+   * @description 后序遍历，无递归
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} [node=this.root]
+   * @memberof BinaryTree
+   */
+  postOrderTraverse(node = this.root) {
+    let stack = [];
+    let ret = node;
+    while (node || stack.length) {
+      // 栈不空或者node不空时循环
+      if (node) {
+        // 根节点进栈，遍历左子树
+        stack.push(node);
+        node = node.left; // 找到最左端的节点，路径上的节点全部入栈,包括叶子节点
+      } else {
+        node = stack[stack.length - 1]; // 获取栈顶节点
+        if (node.right && node.right != ret) {
+          // 如果node有右节点且未访问过
+          node = node.right;
+          stack.push(node);
+          node = node.left; // 再走到最左
+        } else {
+          node = stack.pop();
+          ret = node;
+          node = null;
+        }
+      }
+    }
+  }
+
+  /**
+   * @description 层次遍历
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} [node=this.root]
+   * @memberof BinaryTree
+   */
+  levelOrderTraverse(node = this.root) {
+    let queue = [];
+    queue.push(node);
+    while (queue.length) {
+      node = queue.shift();
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
     }
   }
 }
