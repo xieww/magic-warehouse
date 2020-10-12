@@ -32,54 +32,6 @@ class BinaryTree {
   }
 
   /**
-   * @description 前序遍历
-   * @author xieww
-   * @date 2020-10-12
-   * @param {*} root
-   * @param {function} callback
-   * @memberof BinaryTree
-   */
-  preorderTraversal(root, callback) {
-    if (root !== null) {
-      callback(root.val);
-      this.preorderTraversal(root.left, callback);
-      this.preorderTraversal(root.right, callback);
-    }
-  }
-
-  /**
-   * @description 中序遍历
-   * @author xieww
-   * @date 2020-10-12
-   * @param {*} root
-   * @param {function} callback
-   * @memberof BinaryTree
-   */
-  inOrderTraverse(root, callback) {
-    if (root !== null) {
-      this.inOrderTraverse(root.left, callback);
-      callback(root.val);
-      this.inOrderTraverse(root.right, callback);
-    }
-  }
-
-  /**
-   * @description 后序遍历
-   * @author xieww
-   * @date 2020-10-12
-   * @param {*} root
-   * @param {function} callback
-   * @memberof BinaryTree
-   */
-  postOrderTraverse(root, callback) {
-    if (root !== null) {
-      this.postOrderTraverse(root.left, callback);
-      this.postOrderTraverse(root.right, callback);
-      callback(root.val);
-    }
-  }
-
-  /**
    * @description 查找最小节点
    * @author xieww
    * @date 2020-10-12
@@ -220,6 +172,68 @@ class BinaryTree {
    */
   search(val) {
     return this.searchNode(this.root, val);
+  }
+
+  /**
+   * @description 前序遍历
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} root
+   * @param {function} callback
+   * @memberof BinaryTree
+   */
+  preorderTraversal(root, callback) {
+    if (root !== null) {
+      callback(root.val);
+      this.preorderTraversal(root.left, callback);
+      this.preorderTraversal(root.right, callback);
+    }
+  }
+
+  /**
+   * @description 中序遍历
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} root
+   * @param {function} callback
+   * @memberof BinaryTree
+   */
+  inOrderTraverse(root, callback) {
+    if (root !== null) {
+      this.inOrderTraverse(root.left, callback);
+      callback(root.val);
+      this.inOrderTraverse(root.right, callback);
+    }
+  }
+
+  inOrderNonRec(node = this.root) {
+    // 算法需要借助一个栈
+    let stack = [];
+    while (node || stack.length) {
+      if (node) {
+        stack.push(node);
+        node = node.left;
+      } else {
+        node = stack.pop();
+        node = node.right;
+      }
+    }
+  }
+
+  /**
+   * @description 后序遍历
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} root
+   * @param {function} callback
+   * @memberof BinaryTree
+   */
+  postOrderTraverse(root, callback) {
+    if (root !== null) {
+      this.postOrderTraverse(root.left, callback);
+      this.postOrderTraverse(root.right, callback);
+      callback(root.val);
+    }
   }
 }
 
