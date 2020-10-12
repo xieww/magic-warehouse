@@ -191,22 +191,29 @@ class BinaryTree {
   }
 
   /**
-   * @description 中序遍历
+   * @description 中序遍历，递归
    * @author xieww
    * @date 2020-10-12
    * @param {*} root
    * @param {function} callback
    * @memberof BinaryTree
    */
-  inOrderTraverse(root, callback) {
+  inOrderTraverseByRecursion(root, callback) {
     if (root !== null) {
-      this.inOrderTraverse(root.left, callback);
+      this.inOrderTraverseByRecursion(root.left, callback);
       callback(root.val);
-      this.inOrderTraverse(root.right, callback);
+      this.inOrderTraverseByRecursion(root.right, callback);
     }
   }
 
-  inOrderNonRec(node = this.root) {
+  /**
+   * @description 中序遍历无递归实现
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} [node=this.root]
+   * @memberof BinaryTree
+   */
+  inOrderTraverse(node = this.root) {
     // 算法需要借助一个栈
     let stack = [];
     while (node || stack.length) {
