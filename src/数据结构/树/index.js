@@ -19,6 +19,19 @@ class BinaryTree {
   }
 
   /**
+   * @description 插入节点
+   * @author xieww
+   * @date 2020-10-12
+   * @param {*} val
+   * @memberof BinaryTree
+   */
+  insert(val) {
+    const tree = new Tree();
+    tree.insert(val);
+    this.root = tree.root;
+  }
+
+  /**
    * @description 前序遍历
    * @author xieww
    * @date 2020-10-12
