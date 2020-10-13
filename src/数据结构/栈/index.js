@@ -1,3 +1,9 @@
+/**
+ * @description 栈
+ * @author xieww
+ * @date 2020-10-13
+ * @class Stack
+ */
 class Stack {
   constructor() {
     this.stack = [];
