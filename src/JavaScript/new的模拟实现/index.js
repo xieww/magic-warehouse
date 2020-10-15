@@ -1,6 +1,6 @@
 function objectFactory() {
-  var obj = new Object(), //从Object.prototype上克隆一个对象
-    Constructor = [].shift.call(arguments); //取得外部传入的构造器
+  var obj = new Object(); //从Object.prototype上克隆一个对象
+  var Constructor = [].shift.call(arguments); //取得外部传入的构造器
 
   // var F = function () {};
   // F.prototype = Constructor.prototype;

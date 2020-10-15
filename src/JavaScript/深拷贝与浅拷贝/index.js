@@ -16,6 +16,13 @@ function deepCopy(obj) {
       );
 }
 
+/**
+ * @description 深拷贝
+ * @author xieww
+ * @date 2020-10-15
+ * @param {*} targetObj
+ * @returns
+ */
 function deepClone(targetObj) {
   let type = Object.prototype.toString.call(targetObj);
   let newObj;
@@ -31,6 +38,27 @@ function deepClone(targetObj) {
     newObj[key] = deepClone(value);
   }
   return newObj;
+}
+
+/**
+ * @description 浅拷贝
+ * @author xieww
+ * @date 2020-10-15
+ * @param {*} target
+ * @returns
+ */
+function shallowClone(target) {
+  if (typeof target === "object" && target !== null) {
+    const cloneTarget = Array.isArray(target) ? [] : {};
+    for (let prop in target) {
+      if (target.hasOwnProperty(prop)) {
+        cloneTarget[prop] = target[prop];
+      }
+    }
+    return cloneTarget;
+  } else {
+    return target;
+  }
 }
 
 // 测试案例
