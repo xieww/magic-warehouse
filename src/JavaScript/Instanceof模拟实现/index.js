@@ -4,15 +4,15 @@ function _instanceof(left, right) {
     return false;
   }
   // 取left的隐式原型，
-  let prototype = Object.getPrototypeOf(left); // 等同于 let prototype = left.__proto__;
+  left = Object.getPrototypeOf(left); // 等同于 left = left.__proto__;
   while (true) {
     if (left === undefined || left === null) {
       return false;
     }
-    if (prototype === right.prototype) {
+    if (left === right.prototype) {
       return true;
     }
-    prototype = Object.getPrototypeOf(prototype);
+    left = Object.getPrototypeOf(left);
   }
 }
 
