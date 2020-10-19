@@ -3,7 +3,8 @@ function _instanceof(left, right) {
   if (typeof left !== "object" || !left) {
     return false;
   }
-  let prototype = Object.getPrototypeOf(left);
+  // 取left的隐式原型，
+  let prototype = Object.getPrototypeOf(left); // 等同于 let prototype = left.__proto__;
   while (true) {
     if (left === undefined || left === null) {
       return false;
