@@ -9,7 +9,7 @@ Function.prototype.__call = function (context) {
     args.push(`arguments[${1}]`);
   }
   var result = eval(`context.fn(${args})`);
-  delete arguments.fn;
+  delete context.fn;
   return result;
 };
 

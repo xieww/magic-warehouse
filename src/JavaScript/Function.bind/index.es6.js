@@ -1,6 +1,6 @@
 Function.prototype._bind = function (context, ...args) {
   if (typeof this !== "function") {
-    throw new TypeError(`${this}._bind is not a functionÎ`);
+    throw new TypeError(`${this}._bind is not a function`);
   }
 
   var self = this;
