@@ -6,7 +6,7 @@ Function.prototype.__call = function (context) {
   context.fn = this;
   var args = [];
   for (var i = 1; i < arguments.length; i++) {
-    args.push(`arguments[${1}]`);
+    args.push(`arguments[${i}]`);
   }
   var result = eval(`context.fn(${args})`);
   delete context.fn;
