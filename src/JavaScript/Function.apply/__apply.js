@@ -13,7 +13,7 @@ Function.prototype.__apply = function (context) {
     }
     result = eval(`context.fn(${args})`);
   } else {
-    result = arguments.fn();
+    result = context.fn();
   }
   delete context.fn;
   return result;
