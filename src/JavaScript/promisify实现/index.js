@@ -1,5 +1,8 @@
 /**
  * promisify：就是“promise 化”，将一个不是promise的方法变成 promise
+ * nodeCallback: 
+ *    1. 回调函数在主函数中的参数位置必须是最后一个;
+ *    2. 回调函数参数中的第一个参数必须是 error
  * @param {*} func
  * @param {*} ctx
  */
