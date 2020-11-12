@@ -66,36 +66,15 @@ function bubbleSort3(arr) {
   return arr;
 }
 
-// console.log(
-//   "should be [-111, -1, 0, 2, 3, 7, 10, 77, 99]",
-//   bubbleSort([10, 0, 2, 3, 7, 99, -1, 77, -111])
-// );
-// console.log(
-//   "should be [-111, -1, 0, 2, 3, 7, 10, 77, 99]",
-//   bubbleSort2([10, 0, 2, 3, 7, 99, -1, 77, -111])
-// );
-// console.log(
-//   "should be [-111, -1, 0, 2, 3, 7, 10, 77, 99]",
-//   bubbleSort3([10, 0, 2, 3, 7, 99, -1, 77, -111])
-// );
-
-function isContain(a, b) {
-  for (let i in b) {
-    if (a[0] === b[i]) {
-      let tmp = true;
-      for (let j in a) {
-        if (a[j] !== b[~~i + ~~j]) {
-          tmp = false;
-        }
-      }
-      if (tmp) {
-        return i;
-      }
-    }
-  }
-  return -1;
-}
-
-var a = '355';
-var b = '12354355'; // 返回 5
-console.log(isContain(a,b));;
+console.log(
+  "should be [-111, -1, 0, 2, 3, 7, 10, 77, 99]",
+  bubbleSort([10, 0, 2, 3, 7, 99, -1, 77, -111])
+);
+console.log(
+  "should be [-111, -1, 0, 2, 3, 7, 10, 77, 99]",
+  bubbleSort2([10, 0, 2, 3, 7, 99, -1, 77, -111])
+);
+console.log(
+  "should be [-111, -1, 0, 2, 3, 7, 10, 77, 99]",
+  bubbleSort3([10, 0, 2, 3, 7, 99, -1, 77, -111])
+);
