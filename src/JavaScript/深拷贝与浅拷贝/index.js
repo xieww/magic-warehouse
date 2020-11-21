@@ -23,21 +23,25 @@ function deepCopy(obj) {
  * @param {*} targetObj
  * @returns
  */
-function deepClone(targetObj) {
-  let type = Object.prototype.toString.call(targetObj);
-  let newObj;
+function deepClone(target, map = new WeakMap()) {
+  let type = Object.prototype.toString.call(target);
+  let cloneTarget;
   if (type === "[object Object]") {
-    newObj = {};
+    cloneTarget = {};
   } else if (type === "[object Array]") {
-    newObj = [];
+    cloneTarget = [];
   } else {
-    return targetObj;
+    return target;
   }
-  for (key in targetObj) {
-    let value = targetObj[key];
-    newObj[key] = deepClone(value);
+  if (map.get(target)) {
+    return map.get(target);
   }
-  return newObj;
+  map.set(target, cloneTarget);
+  for (key in target) {
+    let value = target[key];
+    cloneTarget[key] = deepClone(value, map);
+  }
+  return cloneTarget;
 }
 
 /**
@@ -73,6 +77,8 @@ var a = {
   deep: { count: 2, obj: { age: 18 } },
   arr: [1, 2, 3, [87, 56]],
 };
+a.child = a;
+
 var b = { ...a };
 var c = deepClone(b);
 b.count = 999;
