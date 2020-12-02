@@ -33,7 +33,7 @@ const timeout = (time) =>
     setTimeout(resolve, time);
   });
 
-const scheduler = new Scheduler(1);
+const scheduler = new Scheduler();
 
 const addTask = (time, order) => {
   scheduler.add(() => timeout(time).then(() => console.log(order)));
