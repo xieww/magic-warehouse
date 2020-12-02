@@ -15,10 +15,11 @@ class Scheduler {
     }
     this.current++;
     const task = this.queue.shift();
-    task().then(() => {
-      this.current--;
-      this.run();
-    });
+    task &&
+      task().then(() => {
+        this.current--;
+        this.run();
+      });
   }
 
   initRun() {
