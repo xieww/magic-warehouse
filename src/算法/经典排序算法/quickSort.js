@@ -1,3 +1,11 @@
+/**
+ * @description 快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，
+ *              则可分别对这两部分记录继续进行排序，以达到整个序列有序
+ * @author xieww
+ * @date 2020-12-02
+ * @param {*} array
+ * @returns 
+ */
 function quickSort(array) {
   console.time("1.快速排序耗时");
   var helper = (arr, left, right) => {
