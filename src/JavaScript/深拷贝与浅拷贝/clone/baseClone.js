@@ -101,7 +101,7 @@ function baseClone(target, map = new WeakMap()) {
   if (type === mapTag) {
     //处理Map
     target.forEach((item, key) => {
-      cloneTarget.set(baseClone(key, map), baseClone(item, map));
+      cloneTarget.set(key, baseClone(item, map));
     });
   }
 
