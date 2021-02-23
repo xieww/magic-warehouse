@@ -98,14 +98,14 @@ function baseClone(target, map = new WeakMap()) {
   if (map.get(target)) return target;
   map.set(target, true);
 
-  if (type === mapTag) {
+  if (type === TYPE_MAP) {
     //处理Map
     target.forEach((item, key) => {
       cloneTarget.set(key, baseClone(item, map));
     });
   }
 
-  if (type === setTag) {
+  if (type === TYPE_SET) {
     //处理Set
     target.forEach((item) => {
       cloneTarget.add(baseClone(item, map));
