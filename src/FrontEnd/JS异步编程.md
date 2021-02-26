@@ -316,3 +316,27 @@ setInterval((timer) => {
 ```
 
 首先 `requestAnimationFrame` 自带函数节流功能，基本可以保证在 `16.6` 毫秒内只执行一次（不掉帧的情况下），并且该函数的延时效果是精确的，没有其他定时器时间不准的问题，当然你也可以通过该函数来实现 `setTimeout`。
+
+```js
+// 模拟setTimeout
+function setTimeout(callback, interval) {
+  let timer;
+  const now = Date.now;
+  let startTime = now();
+  let endTime = startTime;
+  const run = () => {
+    // timer = window.requestAnimationFrame(run);
+    // endTime = now()
+    if (endTime - startTime >= interval) {
+      callback(timer);
+      cancelAnimationFrame(timer);
+    }
+  };
+  timer = window.requestAnimationFrame(run);
+  return timer;
+}
+
+setTimeout(() => {
+  console.log('执行完成');
+},4000)
+```
