@@ -108,3 +108,80 @@
   fn(1, _, _, 4)(_, 3)(2)(5);
   fn(_, 2)(_, _, 4)(1)(3)(5);
 }
+
+{
+  function curry(func) {
+    return function (arg) {
+      return func(arg);
+    };
+  }
+
+  console.log(["1", "2", "3", "4"].map(curry(parseInt))); // => 1, 2, 3, 4
+}
+
+{
+  (() => {
+    function curry(callback) {
+      return function deep(...args) {
+        return Object.assign(deep.bind(this, ...args), {
+          valueOf() {
+            return callback.apply(this, args);
+          },
+          toString() {
+            return callback.apply(this, args);
+          },
+          toLocaleString() {
+            return callback.apply(this, args);
+          },
+        });
+      };
+    }
+
+    function func(...arg) {
+      let result = arg.reduce((old, item) => old + item, 0);
+      return result;
+    }
+
+    var add = curry(func);
+
+    // var a = add(1)(2);
+
+    // +a, +a(3), +a(4), +a(3)(4);
+    console.log(+add(1));
+    console.log(+add(1)(2));
+    console.log(+add(1)(2)(3));
+    console.log(+add(1, 2));
+    console.log(+add(1, 2, 3));
+    console.log(+add(1, 2)(3));
+    console.log(+add(1)(2, 3));
+    console.log(+add(1)(2, 3)(4));
+  })();
+}
+
+{
+  function curry(...arg) {
+    val = arg.reduce((cur, old) => cur + old, 0);
+    return Object.assign(curry.bind(this, val), {
+      valueOf() {
+        console.log('valueOf');
+        return val;
+      },
+      toString() {
+        console.log('toString');
+        return val;
+      },
+      toLocaleString() {
+        console.log('toLocaleString');
+        return val;
+      },
+    });
+  }
+  console.log(+curry(1));
+  console.log(+curry(1)(2));
+  console.log(+curry(1)(2)(3));
+  console.log(+curry(1, 2));
+  console.log(+curry(1, 2, 3));
+  console.log(+curry(1, 2)(3));
+  console.log(+curry(1)(2, 3));
+  console.log(+curry(1)(2, 3)(4));
+}
