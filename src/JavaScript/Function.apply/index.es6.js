@@ -4,6 +4,9 @@
  * @param {*} args 
  */
 Function.prototype._apply = function (context, args) {
+  if (typeof this !== "function") {
+    throw new TypeError(`${this}._apply is not a function`);
+  }
   context = context ? context : typeof window === "undefined" ? global : window;
   context.__fn__ = this;
   let result = context.__fn__(...args);

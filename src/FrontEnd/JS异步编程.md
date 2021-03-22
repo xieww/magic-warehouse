@@ -230,7 +230,7 @@ console.log("1", a); // -> '1' 1
 
 > setTimeout、setInterval、requestAnimationFrame 各有什么特点？
 
-异步编程当然少不了定时器了，常见的定时器函数有` setTimeout、setInterval、requestAnimationFrame`。我们先来讲讲最常用的 `setTimeout`，很多人认为 `setTimeout` 是延时多久，那就应该是多久后执行。
+异步编程当然少不了定时器了，常见的定时器函数有`setTimeout、setInterval、requestAnimationFrame`。我们先来讲讲最常用的 `setTimeout`，很多人认为 `setTimeout` 是延时多久，那就应该是多久后执行。
 
 其实这个观点是错误的，因为 JS 是单线程执行的，如果前面的代码影响了性能，就会导致 `setTimeout` 不会按期执行。当然了，我们可以通过代码去修正 `setTimeout`，从而使定时器相对准确
 
@@ -316,3 +316,27 @@ setInterval((timer) => {
 ```
 
 首先 `requestAnimationFrame` 自带函数节流功能，基本可以保证在 `16.6` 毫秒内只执行一次（不掉帧的情况下），并且该函数的延时效果是精确的，没有其他定时器时间不准的问题，当然你也可以通过该函数来实现 `setTimeout`。
+
+```js
+// 模拟setTimeout
+function setTimeout(callback, interval) {
+  let timer;
+  const now = Date.now;
+  let startTime = now();
+  let endTime = startTime;
+  const run = () => {
+    // timer = window.requestAnimationFrame(run);
+    // endTime = now()
+    if (endTime - startTime >= interval) {
+      callback(timer);
+      cancelAnimationFrame(timer);
+    }
+  };
+  timer = window.requestAnimationFrame(run);
+  return timer;
+}
+
+setTimeout(() => {
+  console.log('执行完成');
+},4000)
+```

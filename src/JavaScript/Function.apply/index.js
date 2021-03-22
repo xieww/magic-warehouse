@@ -1,9 +1,12 @@
 /**
  * 模拟实现apply方法
- * @param {*} context 
- * @param {*} arr 
+ * @param {*} context
+ * @param {*} arr
  */
 // Function.prototype._apply = function (context, arr) {
+// if (typeof this !== "function") {
+//   throw new TypeError(`${this}._apply is not a function`);
+// }
 //   context = context ? context : typeof window === "undefined" ? global : window;
 //   context.fn = this;
 
@@ -23,6 +26,9 @@
 // };
 
 Function.prototype._apply = function (context) {
+  if (typeof this !== "function") {
+    throw new TypeError(`${this}._apply is not a function`);
+  }
   context = context ? context : typeof window === "undefined" ? global : window;
   context.fn = this;
 
@@ -49,3 +55,9 @@ console.log(max); // expected output: 7
 
 const min = Math.min._apply(null, numbers);
 console.log(min); // expected output: 2
+
+try {
+  "a"._apply();
+} catch (error) {
+  console.log("异常信息: ", error);
+}

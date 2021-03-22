@@ -16,22 +16,53 @@ function deepCopy(obj) {
       );
 }
 
-function deepClone(targetObj) {
-  let type = Object.prototype.toString.call(targetObj);
-  console.log("type", type);
-  let newObj;
+/**
+ * @description 深拷贝
+ * @author xieww
+ * @date 2020-10-15
+ * @param {*} targetObj
+ * @returns
+ */
+function deepClone(target, map = new WeakMap()) {
+  let type = Object.prototype.toString.call(target);
+  let cloneTarget;
   if (type === "[object Object]") {
-    newObj = {};
+    cloneTarget = {};
   } else if (type === "[object Array]") {
-    newObj = [];
+    cloneTarget = [];
   } else {
-    return targetObj;
+    return target;
   }
-  for (key in targetObj) {
-    let value = targetObj[key];
-    newObj[key] = deepClone(value);
+  if (map.get(target)) {
+    return map.get(target);
   }
-  return newObj;
+  map.set(target, cloneTarget);
+  for (key in target) {
+    let value = target[key];
+    cloneTarget[key] = deepClone(value, map);
+  }
+  return cloneTarget;
+}
+
+/**
+ * @description 浅拷贝
+ * @author xieww
+ * @date 2020-10-15
+ * @param {*} target
+ * @returns
+ */
+function shallowClone(target) {
+  if (typeof target === "object" && target !== null) {
+    const cloneTarget = Array.isArray(target) ? [] : {};
+    for (let prop in target) {
+      if (target.hasOwnProperty(prop)) {
+        cloneTarget[prop] = target[prop];
+      }
+    }
+    return cloneTarget;
+  } else {
+    return target;
+  }
 }
 
 // 测试案例
@@ -46,6 +77,8 @@ var a = {
   deep: { count: 2, obj: { age: 18 } },
   arr: [1, 2, 3, [87, 56]],
 };
+a.child = a;
+
 var b = { ...a };
 var c = deepClone(b);
 b.count = 999;
@@ -56,9 +89,9 @@ console.log("a", a);
 console.log("b", b);
 console.log("c", c);
 // console.log("浅拷贝", Object.assign({}, a));
-// console.log("浅拷贝", JSON.parse(JSON.stringify(a)));
+// console.log("深拷贝", JSON.parse(JSON.stringify(a)));
 // console.log(
 //   "浅拷贝",
 //   Array.isArray(test1) ? [...test1] : Object.assign({}, test1)
 // );
-// console.log("浅拷贝", JSON.parse(JSON.stringify(test1)));
+// console.log("深拷贝", JSON.parse(JSON.stringify(test1)));

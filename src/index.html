@@ -1,4 +1,9 @@
 <script>
+  // 要求如下：
+
+  // 要求最大并发数 maxNum
+  // 每当有一个请求返回，就留下一个空位，可以增加新的请求
+  // 所有请求完成后，结果按照 urls 里面的顺序依次打出
   function multiRequest(urls = [], maxNum) {
     let result = new Array(urls.length).fill(false);
     let sum = urls.length; //总数
@@ -37,7 +42,7 @@
     });
   }
   const arr = new Array(100).fill("https://api.github.com/search/users?q=d");
-  // multiRequest(arr, 10).then((res) => {
-  //   console.log(res);
-  // });
+  multiRequest(arr, 10).then((res) => {
+    console.log(res);
+  });
 </script>
