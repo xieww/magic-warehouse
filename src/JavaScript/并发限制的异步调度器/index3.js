@@ -1,7 +1,8 @@
 class Scheduler {
-  constructor() {
+  constructor(max = 2) {
     this.tasks = [];
-    this.concurrent = 0;
+    this.max = max;
+    this.current = 0;
   }
   add(promiseCreator) {
     return new Promise((resolve) => {
@@ -10,12 +11,14 @@ class Scheduler {
     });
   }
   runTask() {
-    if (this.concurrent >= 2) return;
+    if (this.current >= this.max || !this.tasks.length) {
+      return;
+    }
     let currentTask = this.tasks.shift();
     if (currentTask) {
-      this.concurrent++;
+      this.current++;
       currentTask().then(() => {
-        this.concurrent -= 1;
+        this.current--;
         this.runTask();
       });
     }
