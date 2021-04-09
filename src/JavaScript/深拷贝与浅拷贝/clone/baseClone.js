@@ -23,16 +23,11 @@ const CAN_TRAVERSE = [
   TYPE_ARGUMENTS,
 ];
 
-const getType = (target) => {
-  return Object.prototype.toString.call(target);
-};
+const getType = (target) => Object.prototype.toString.call(target);
 
-const isObject = (target) => {
-  return (
-    target !== null &&
-    (typeof target === "object" || typeof target === "function")
-  );
-};
+const isObject = (target) =>
+  target !== null &&
+  (typeof target === "object" || typeof target === "function");
 
 const handleRegExp = (target) => {
   const { source, flags } = target;
