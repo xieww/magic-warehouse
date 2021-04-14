@@ -1,6 +1,6 @@
-import { createStore, combineReducers } from "../src/index";
-import counterReducer from "./reducers/counter";
-import infoReducer from "./reducers/info";
+import { createStore, combineReducers } from "../src/index.js";
+import counterReducer from "./reducers/counter.js";
+import infoReducer from "./reducers/info.js";
 
 const reducer = combineReducers({
   counter: counterReducer,

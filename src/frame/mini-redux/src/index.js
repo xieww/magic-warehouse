@@ -1,5 +1,5 @@
-import createStore from './createStore';
-import combineReducers from './combineReducers';
+import createStore from './createStore.js';
+import combineReducers from './combineReducers.js';
 
 export {
   createStore,
