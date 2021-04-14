@@ -50,7 +50,7 @@ function addFor36(str1, str2) {
     let s = alphabet.indexOf(str1[i]) + alphabet.indexOf(str2[j]) + carry;
     if (s >= 36) {
       carry = 1;
-      result = alphabet[s % 36] + result; //有进位将余数和上一次结果相加
+      result = alphabet[s % 36] + result; //有进位将余数对应的值和上一次结果相加
     } else {
       carry = 0;
       result = alphabet[s] + result; //无进位直接和上一次结果相加
