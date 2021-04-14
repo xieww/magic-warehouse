@@ -29,5 +29,5 @@ store.dispatch({
 
 store.dispatch({
   type: "SET_NAME",
-  name: "前端九部2号",
+  name: "全栈开发",
 });
