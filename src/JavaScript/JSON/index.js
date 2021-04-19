@@ -4,6 +4,9 @@ if (!globalThis.JSONTo) {
       return eval("(" + jsonStr + ")");
     },
     stringify: function (data) {
+      if (data === null) {
+        return null;
+      }
       let dataType = typeof data;
 
       if (dataType !== "object") {
@@ -25,9 +28,7 @@ if (!globalThis.JSONTo) {
         //boolean 返回 String()
         return String(result);
       } else if (dataType === "object") {
-        if (data === null) {
-          return "null";
-        } else if (data.toJSON && typeof data.toJSON === "function") {
+        if (data.toJSON && typeof data.toJSON === "function") {
           return arguments.callee(data.toJSON());
         } else if (data instanceof Array) {
           let result = [];
