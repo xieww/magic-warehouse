@@ -34,7 +34,8 @@ if (!globalThis.JSONTo) {
           let result = [];
           //如果是数组
           //toJSON 方法可以存在于原型链中
-          data.forEach((item, index) => {
+          for (let index = 0; index < data.length; index++) {
+            const item = data[index];
             if (
               typeof item === "undefined" ||
               typeof item === "function" ||
@@ -44,7 +45,7 @@ if (!globalThis.JSONTo) {
             } else {
               result[index] = arguments.callee(item);
             }
-          });
+          }
           result = "[" + result + "]";
           return result.replace(/'/g, '"');
         } else {
@@ -78,4 +79,8 @@ if (!globalThis.JSONTo) {
 }
 
 let reg = new RegExp("w");
+let symbol = Symbol("1024");
+function fn(params) {}
+const arr = [, symbol, fn, 12, "hello", reg];
 console.log(JSONTo.stringify(reg));
+console.log(JSONTo.stringify(arr));
