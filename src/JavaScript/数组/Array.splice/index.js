@@ -1,12 +1,7 @@
 Array.prototype._splice = function (index, counter, ...arg) {
-  const array = this;
-  console.log(arguments, array);
   if (!arguments.length) {
     return [];
   }
-
-  // if (index !== void 0) {
-  // }
 
   if (index < 0) {
     if (Math.abs(index) > this.length) {
