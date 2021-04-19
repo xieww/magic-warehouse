@@ -82,5 +82,11 @@ let reg = new RegExp("w");
 let symbol = Symbol("1024");
 function fn(params) {}
 const arr = [, symbol, fn, 12, "hello", reg];
+var obj = {
+  a: 1,
+  b: arr,
+  c: { name: "tiger", age: 16, c: obj },
+};
 console.log(JSONTo.stringify(reg));
 console.log(JSONTo.stringify(arr));
+console.log(JSON.stringify(obj));
