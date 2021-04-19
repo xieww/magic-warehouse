@@ -13,6 +13,9 @@ Array.prototype.reduce = function (callbackfn, initialValue) {
   let k = 0;
   let accumulator = initialValue;
   if (accumulator === undefined) {
+    if (len === 0) {
+      throw new Error("Reduce of empty array with no initial value");
+    }
     for (; k < len; k++) {
       // 查找原型链
       if (k in O) {
@@ -21,14 +24,15 @@ Array.prototype.reduce = function (callbackfn, initialValue) {
         break;
       }
     }
-    // 循环结束还没退出，就表示数组全为空
-    throw new Error("Each element of the array is empty");
   }
   for (; k < len; k++) {
     if (k in O) {
       // 注意，核心！
-      accumulator = callbackfn.call(undefined, accumulator, O[k], O);
+      accumulator = callbackfn.call(undefined, accumulator, O[k], k, O);
     }
   }
   return accumulator;
 };
+
+const arr = [1, 2, 3, 4, 5];
+console.log(arr.reduce((sum, num) => sum + num));
