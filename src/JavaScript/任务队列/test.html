@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>任务队列</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <button onclick="startTask()">开始任务</button>
+    <div id="task"></div>
+  </body>
+  <script type="module">
+    import Queue from "./queue.mjs"
+    const taskQueue = Queue(2)
+    window.task = taskQueue
+  </script>
+
+  <script>
+    const container = document.getElementById("task")
+    function showRes(text) {
+      const el = document.createElement("p")
+      el.className = "list"
+      el.innerText = text.toString()
+      container.appendChild(el)
+    }
+
+    function startTask() {
+      const childs = document.querySelectorAll("#task *")
+      console.log(childs)
+
+      childs?.forEach((el) => {
+        container.removeChild(el)
+      })
+
+      window?.task.enqueue({
+        func: (next) => {
+          showRes(`Task0(同步)开始执行：${Date.now()}`)
+          next()
+        }
+      })
+
+      // 带参数的异步任务
+      window?.task.enqueue({
+        func: (next, prop1, prop2) => {
+          showRes(`Task1(异步)开始执行：${Date.now()}`)
+          showRes(prop1)
+          setTimeout(() => {
+            showRes(prop2)
+            next()
+            showRes("开始下一个任务")
+          }, 1000)
+        },
+        payload: ["hello", "world"]
+      })
+
+      // 不带参数的同步任务
+      window?.task.enqueue({
+        func: (next) => {
+          showRes(`Task2(同步)开始执行：${Date.now()}`)
+          next()
+        }
+      })
+    }
+  </script>
+</html>
