@@ -16,7 +16,7 @@ var promisify = (func, ctx) => {
       // 调用原来的非promise方法func，绑定作用域，传参，以及callback（callback为func的最后一个参数）
       func.call(ctx, ...arguments, function () {
         // 将回调函数中的的第一个参数error单独取出
-        var args = Array.prototype.map.call(arguments, (item) => item);
+        var args = Array.prototype.slice.call(arguments);
         var err = args.shift();
         // 判断是否有error
         if (err) {
@@ -35,7 +35,7 @@ var promisify = (func, ctx) => {
   var promisify = function (method, ctx) {
     return function () {
       //获取method调用的需要参数
-      var args = Array.prototype.slice.call(arguments, 0);
+      var args = Array.prototype.slice.call(arguments);
 
       // use runtime this if ctx not provided
       ctx = ctx || this;
@@ -43,15 +43,14 @@ var promisify = (func, ctx) => {
       //返回一个新的Promise对象
       return new Promise(function (resolve, reject) {
         //除了函数传入的参数以外还需要一个callback函数来供异步方法调用
-        var callback = function () {
-          return function (err, result) {
-            if (err) {
-              return reject(err);
-            }
-            return resolve(result);
-          };
+        var callback = function (err, result) {
+          if (err) {
+            return reject(err);
+          }
+          return resolve(result);
         };
-        args.push(callback());
+
+        args.push(callback);
         //调用method
         method.apply(ctx, args);
       });
