@@ -1,6 +1,6 @@
 const DEFAULT_CONFIG = { method: "GET", async: true };
-const request = function (url, config) {
-  const { method, async, headers, data } = config || DEFAULT_CONFIG;
+const request = function (url, config = DEFAULT_CONFIG) {
+  const { method, async, headers, data } = config;
   return new Promise((resolve, reject) => {
     const xhr = XMLHttpRequest
       ? new XMLHttpRequest()
