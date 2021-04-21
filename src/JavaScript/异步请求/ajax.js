@@ -14,7 +14,7 @@ const request = function (url, config) {
     }
     xhr.onreadystatechange = function () {
       if (xhr.readyState !== 4) return;
-      if (xhr.status === 200 || xhr.status === 304) {
+      if (xhr.status >= 200 && xhr.status < 400) {
         resolve(xhr.responseText);
       } else {
         reject(new Error(xhr.responseText));
