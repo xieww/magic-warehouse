@@ -20,6 +20,6 @@ const request = function (url, config) {
         reject(new Error(xhr.responseText));
       }
     };
-    xhr.send(data);
+    data ? xhr.send(data) : xhr.send();
   });
 };
