@@ -45,7 +45,7 @@ function addFor36(str1, str2) {
   let i = len1 - 1;
   let j = len2 - 1;
   let result = "";
-  let carry = 0;
+  let carry = 0;//进位
   while (i >= 0 && j >= 0) {
     let s = alphabet.indexOf(str1[i]) + alphabet.indexOf(str2[j]) + carry;
     if (s >= 36) {
