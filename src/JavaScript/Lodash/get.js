@@ -16,6 +16,11 @@ function _get(object, ...args) {
   );
 }
 
+const __get = (object, ...args) =>
+  args.map((arg) =>
+    arg.match(/[^\.\[\]]+/g).reduce((res, prop) => res && res[prop], object)
+  );
+
 const obj = {
   selector: { to: { job: "FE Coder" } },
   target: [1, 2, { name: "byted" }],
@@ -38,6 +43,18 @@ console.log(
 ); // ['FE coder', 1, 'byted', undefined]
 console.log(
   _get(
+    obj,
+    "selector.to.job",
+    "target[0]",
+    "target[2].name",
+    "asd",
+    "time",
+    "fn",
+    "regex"
+  )
+); // ['FE coder', 1, 'byted', undefined]
+console.log(
+  __get(
     obj,
     "selector.to.job",
     "target[0]",
