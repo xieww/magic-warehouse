@@ -4,9 +4,10 @@ const DEFAULT_CONFIG = {
   headers: {
     Accept: "application/json",
   },
+  credentials: "same-origin",
 };
 const request = function (url, config = DEFAULT_CONFIG) {
-  const { method, async, headers, data } = config;
+  const { method, async, headers, data, credentials } = config;
   return new Promise((resolve, reject) => {
     const xhr = XMLHttpRequest
       ? new XMLHttpRequest()
@@ -17,6 +18,13 @@ const request = function (url, config = DEFAULT_CONFIG) {
         xhr.setRequestHeader(key, headers[key]);
       });
     }
+    // 是否携带cookie，same-origin,include,omit
+    if (credentials === "include") {
+      xhr.withCredentials = true;
+    } else if (credentials === "omit") {
+      xhr.withCredentials = false;
+    }
+
     xhr.onreadystatechange = function () {
       if (xhr.readyState !== 4) return;
       if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
