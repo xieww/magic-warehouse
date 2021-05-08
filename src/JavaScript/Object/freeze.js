@@ -25,28 +25,12 @@ function _freeze(obj) {
           Object.defineProperty(obj, key, {
             writable: false,
           });
-          _freeze(obj[key]); // 递归，实现更深层次的冻结
+          // _freeze(obj[key]); // 递归，实现更深层次的冻结
         }
       }
     }
     Object.seal(obj);
   }
-  return obj;
-}
-
-function __freeze(obj) {
-  if (obj instanceof Object) {
-    for (const key in obj) {
-      if (obj[key] instanceof Object) {
-        __freeze(obj[key]); // 递归，实现更深层次的冻结
-      } else {
-        Object.defineProperty(obj, key, {
-          writable: false,
-        });
-      }
-    }
-  }
-  Object.seal(obj);
   return obj;
 }
 
