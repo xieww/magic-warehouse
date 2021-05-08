@@ -24,5 +24,13 @@ Array.prototype._map = function (callback, thisArg) {
   return A;
 };
 
+// 利用reduce实现map
+Array.prototype.mapUsingReduce = function (callback, thisArg) {
+  return this.reduce(function (mappedArray, currentValue, index, array) {
+    mappedArray[index] = callback.call(thisArg, currentValue, index, array);
+    return mappedArray;
+  }, []);
+};
+
 const arr = [1, 2, 3, 4, 5];
 console.log(arr._map((item) => item * 2));
