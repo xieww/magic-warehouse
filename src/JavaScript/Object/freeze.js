@@ -1,5 +1,5 @@
 /**
- * @description 冻结对象
+ * @description 冻结对象，兼容”数组“、”普通对象“
  * @author xieww
  * @date 2021-05-08
  * @param {*} obj
