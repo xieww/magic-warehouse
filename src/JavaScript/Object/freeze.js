@@ -7,13 +7,6 @@
 function _freeze(obj) {
   if (obj instanceof Object) {
     for (const key in obj) {
-      // if (obj[key] instanceof Object) {
-      //   _freeze(obj[key]); // 递归，实现更深层次的冻结
-      // } else {
-      //   Object.defineProperty(obj, key, {
-      //     writable: false,
-      //   });
-      // }
       if (Object.hasOwnProperty.call(obj, key)) {
         Object.defineProperty(obj, key, {
           writable: false,
