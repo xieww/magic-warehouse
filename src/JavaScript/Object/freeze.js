@@ -16,6 +16,7 @@ function _freeze(obj) {
     }
   }
   Object.seal(obj);
+  return obj;
 }
 
 function __freeze(obj) {
@@ -31,13 +32,14 @@ function __freeze(obj) {
     }
   }
   Object.seal(obj);
+  return obj;
 }
 
 const obj = {
   prop: 42,
 };
 
-_freeze(obj);
+console.log("====", _freeze(obj));
 // Object.freeze(obj)
 
 obj.prop = 33;
