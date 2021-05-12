@@ -5,6 +5,11 @@ function compose() {
   };
 }
 
+const compose =
+  (...args) =>
+  (data) =>
+    args.reduceRight((pre, fn) => fn(pre), data);
+
 function f1(data) {
   console.log("f1执行");
   return data + 1;
@@ -22,5 +27,5 @@ function f4(data) {
   return data + 4;
 }
 
-console.log('结果是'+f1(f2(f3(f4(3)))))
+console.log("结果是" + f1(f2(f3(f4(3)))));
 console.log("结果是" + compose(f1, f2, f3, f4)(3));
