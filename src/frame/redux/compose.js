@@ -20,6 +20,31 @@ function compose() {
 //   };
 // };
 
+// // promise
+// const compose = function (...args) {
+//   let init = args.pop();
+//   return function (...arg) {
+//     return args.reverse().reduce(function (sequence, func) {
+//       return sequence.then(function (result) {
+//         return func.call(null, result);
+//       });
+//     }, Promise.resolve(init.apply(null, arg)));
+//   };
+// };
+
+// // generator
+// const compose = function (...steps) {
+//   let g = iterateSteps(steps);
+//   return function (...args) {
+//     let val = steps.pop().apply(null, args);
+//     // 这里是第一个值
+//     console.log(val);
+//     // 因为无法传参数 所以无所谓执行 就是空耗一个yield
+//     g.next();
+//     return steps.reverse.reduce((val, val1) => g.next(val).value, val);
+//   };
+// };
+
 const compose =
   (...args) =>
   (data) =>
