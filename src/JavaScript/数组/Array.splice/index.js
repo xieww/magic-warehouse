@@ -3,6 +3,16 @@ Array.prototype._splice = function (index, counter, ...arg) {
     return [];
   }
 
+  // 数组为空的情况
+  const len = this.length;
+  if (len === 0) {
+    arg.forEach((item, index) => {
+      this[index] = item;
+    })
+    this.length = arg.length;
+    return [];
+  }
+
   if (index < 0) {
     if (Math.abs(index) > this.length) {
       index = 0;
@@ -30,4 +40,6 @@ Array.prototype._splice = function (index, counter, ...arg) {
 };
 
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
+const arr = [];
 console.log(fruits._splice(1, 2, "hah", "cc", "ff"), fruits);
+console.log(arr._splice(1, 2, "hah", "cc", "ff"), arr);
