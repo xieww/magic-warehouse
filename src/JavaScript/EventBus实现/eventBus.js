@@ -32,7 +32,7 @@ class EventEmitter {
     if (!handler) {
       // 为 type 事件绑定回调
       this._events.set(type, wrapCallback(fn, once));
-    } else if (handler && handler.callback === "function") {
+    } else if (handler && typeof handler.callback === "function") {
       // 如果handler.callback是函数说明只有一个监听者, 多个监听者用数组进行存储
       this._events.set(type, [handler, wrapCallback(fn, once)]);
     } else {
@@ -123,3 +123,20 @@ class EventEmitter {
     }
   }
 }
+
+let e = new EventEmitter();
+e.addListener("type", () => {
+  console.log("type事件触发！");
+});
+e.addListener("type", () => {
+  console.log("WOW!type事件又触发了！");
+});
+
+function f() {
+  console.log("type事件我只触发一次");
+}
+e.once("type", f);
+e.emit("type");
+e.emit("type");
+e.removeAllListener("type");
+e.emit("type");
