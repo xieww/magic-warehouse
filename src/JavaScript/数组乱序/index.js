@@ -17,6 +17,16 @@ function shuffle(nums) {
   return arr;
 }
 
+function shuffles(nums) {
+  let len = nums.length;
+  while (len) {
+    const i = Math.floor(Math.random() * len);
+    len--;
+    [nums[i], nums[len]] = [nums[len], nums[i]];
+  }
+  return nums;
+}
+
 function test_shuffle(shuffleFn) {
   // 多次乱序数组的次数
   let n = 100000;
@@ -50,4 +60,14 @@ function test_shuffle(shuffleFn) {
   console.table(countObj);
 }
 
-test_shuffle(shuffle);
+// test_shuffle(shuffle);
+const arr = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+];
+console.time("耗时1")
+console.log(shuffle(arr));
+console.timeEnd("耗时1")
+
+console.time("耗时2");
+console.log(shuffles(arr));
+console.timeEnd("耗时2")
