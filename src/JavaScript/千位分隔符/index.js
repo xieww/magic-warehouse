@@ -16,6 +16,28 @@
 //   }
 // }
 
+function numberFormat(num) {
+  const array = num.toString().split(".");
+  const str = array[0];
+  let result = "";
+  const len = str.length;
+  let counter = 0;
+  for (let i = len - 1; i >= 0; i--) {
+    if (counter === 3) {
+      result = str[i] + "," + result;
+      counter = 0;
+    } else {
+      result = str[i] + result;
+    }
+    counter++;
+  }
+  if (array[1]) {
+    return result.concat("." + array[1]);
+  } else {
+    return result;
+  }
+}
+
 // function numberFormat(num) {
 //   const array = num.toString().split(".");
 //   const arr = array[0].split("");
