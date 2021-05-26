@@ -1,0 +1,16 @@
+{
+  "name": "mini-redux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node ./test/index.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

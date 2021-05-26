@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本溢出隐藏</title>
+</head>
+<body>
+  <style>
+    /* 单行文本溢出截断隐藏 */
+    /* .container {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    } */
+
+    /* 多行文本溢出截断隐藏，按照行数 */
+    .container {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* 多行文本溢出截断隐藏，按照高度 */
+    /* .container {
+      overflow: hidden;
+      line-height: 20px;
+      max-height: 40px;
+    } */
+
+    /* 伪元素 + 定位实现多行省略 */
+    /* .container {
+        position: relative;
+        line-height: 20px;
+        height: 40px;
+        overflow: hidden;
+    }
+    .container::after {
+        content: "...";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 20px 0 10px;
+    } */
+  </style>
+
+  <div class="container">
+    这是一段文字特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长特别长的描述信息；
+  </div>
+</body>
+</html>

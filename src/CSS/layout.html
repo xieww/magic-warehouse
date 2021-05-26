@@ -1,29 +1,316 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="cn">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>布局</title>
+  <style>
+    *,
+    html {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
 <body>
+  <!-- <style>
+    header {
+      height: 60px;
+      background-color: #f6f6f6;
+    }
+
+    footer {
+      height: 50px;
+      background-color: indianred;
+    }
+
+    .left {
+      width: 100px;
+      height: 300px;
+      float: left;
+      background-color: #ff7875;
+    }
+
+    .right {
+      width: 100px;
+      height: 300px;
+      float: right;
+      background-color: #ff7875;
+    }
+
+    .main {
+      height: 500px;
+      margin-left: 120px;
+      margin-right: 120px;
+      background-color: greenyellow;
+    }
+  </style> -->
+  <!-- <style>
+    header {
+      height: 60px;
+      background-color: #f6f6f6;
+    }
+
+    footer {
+      height: 50px;
+      background-color: indianred;
+    }
+
+    .left {
+      width: 100px;
+      height: 300px;
+      margin-right: 20px;
+      float: left;
+      background-color: #ff7875;
+    }
+
+    .right {
+      width: 100px;
+      height: 300px;
+      margin-left: 20px;
+      float: right;
+      background-color: #ff7875;
+    }
+
+    .main {
+      height: 500px;
+      overflow: hidden;
+      background-color: greenyellow;
+    }
+
+    .container {
+      text-align: center;
+    }
+  </style> -->
+  <!-- <header>顶部</header>
+  <div class="container">
+    <div class="left">左</div>
+    <div class="right">右</div>
+    <div class="main">中</div>
+  </div>
+  <footer>底部</footer> -->
+
+  <!-- 双飞翼布局 -->
+  <!-- <style>
+    .content {
+      width: 100%;
+      float: left;
+    }
+
+    .main {
+      height: 500px;
+      margin-left: 110px;
+      margin-right: 110px;
+      background-color: greenyellow;
+    }
+
+    .left {
+      float: left;
+      width: 100px;
+      height: 300px;
+      margin-left: -100%;
+      background-color: #ff7875;
+    }
+
+    .right {
+      float: right;
+      width: 100px;
+      height: 300px;
+      margin-left: -100px;
+      background-color: #ff7875;
+    }
+  </style>
+  <div class="content">
+    <div class="main">中</div>
+  </div>
+  <div class="left">左</div>
+  <div class="right">右</div> -->
+
+  <!-- 圣杯布局 -->
   <style>
+    header {
+      height: 80px;
+      background-color: palegreen;
+    }
+
+    footer {
+      height: 100px;
+      background-color: darkslategray;
+    }
+    
+    .container {
+      margin-left: 120px;
+      margin-right: 120px;
+    }
+
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .main {
+      width: 100%;
+      height: 500px;
+      float: left;
+      background-color: greenyellow;
+    }
+
+    .left {
+      position: relative;
+      left: -120px;
+      margin-left: -100%;
+      width: 100px;
+      height: 300px;
+      float: left;
+      background-color: #ff7875;
+    }
+
+    .right {
+      position: relative;
+      right: -120px;
+      margin-left: -100px;
+      width: 100px;
+      height: 300px;
+      float: left;
+      background-color: #ff7875;
+    }
+  </style>
+  <header>顶部</header>
+  <div class="container clearfix">
+    <div class="main">中</div>
+    <div class="left">左</div>
+    <div class="right">右</div>
+  </div>
+  <footer>底部</footer>
+  <!-- Flex布局1 -->
+  <!-- <style>
     .container {
       display: flex;
-      justify-content: center;
+    }
+
+    .main {
+      flex-grow: 1;
+      height: 500px;
+      background-color: greenyellow;
+    }
+
+    .left {
+      order:-1;
+      flex: 0 1 100px;
+      height: 300px;
+      margin-right: 20px;
+      background-color: #ff7875;
+    }
+
+    .right {
+      flex: 0 1 100px;
+      height: 300px;
+      margin-left: 20px;
+      background-color: #ff7875;
     }
   </style>
   <div class="container">
-    <div>A</div>
-    <div>B</div>
-  </div>
-  <style>
-    .center {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto;
-      border: 1px solid salmon;
+    <div class="main">中</div>
+    <div class="left">左</div>
+    <div class="right">右</div>
+  </div> -->
+  
+  <!-- Flex布局2 -->
+  <!-- <style>
+    .container {
+      display: flex;
+    }
+
+    .main {
+      flex-grow: 1;
+      height: 500px;
+      background-color: greenyellow;
+    }
+
+    .left {
+      flex: 0 1 100px;
+      height: 300px;
+      margin-right: 20px;
+      background-color: #ff7875;
+    }
+
+    .right {
+      flex: 0 1 100px;
+      height: 300px;
+      margin-left: 20px;
+      background-color: #ff7875;
     }
   </style>
-  <div class="center">水平居中</div>
+  <div class="container">
+    <div class="left">左</div>
+    <div class="main">中</div>
+    <div class="right">右</div>
+  </div> -->
+
+  <!-- table布局，缺点：无法设置栏间距 -->
+  <!-- <style>
+    .container {
+      display: table;
+      width: 100%;
+    }
+
+    .left,.main,.right {
+      display: table-cell;
+    }
+
+    .left,.right {
+      width: 100px;
+      height: 300px;
+      background-color: #ff7875;
+    }
+
+    .main {
+      height: 500px;
+      background-color: yellowgreen;
+    }
+  </style>
+  <div class="container">
+    <div class="left">左</div>
+    <div class="main">中</div>
+    <div class="right">右</div>
+  </div> -->
+
+  <!-- 绝对定位布局 -->
+  <!-- <style>
+    .container {
+      position: relative;
+    }
+
+    .main {
+      height: 500px;
+      margin: 0 120px;
+      background-color: yellowgreen;
+    }
+
+    .left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 300px;
+      background-color: #ff7875;
+    }
+
+    .right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 300px;
+      background-color: #ff7875;
+    }
+  </style>
+  <div class="container">
+    <div class="main">中</div>
+    <div class="left">左</div>
+    <div class="right">右</div>
+  </div> -->
 </body>
 </html>

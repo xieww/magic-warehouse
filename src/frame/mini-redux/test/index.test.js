@@ -1,6 +1,6 @@
-import { createStore, combineReducers } from "../src/index";
-import counterReducer from "./reducers/counter";
-import infoReducer from "./reducers/info";
+import { createStore, combineReducers } from "../src/index.js";
+import counterReducer from "./reducers/counter.js";
+import infoReducer from "./reducers/info.js";
 
 const reducer = combineReducers({
   counter: counterReducer,
@@ -29,5 +29,5 @@ store.dispatch({
 
 store.dispatch({
   type: "SET_NAME",
-  name: "前端九部2号",
+  name: "全栈开发",
 });

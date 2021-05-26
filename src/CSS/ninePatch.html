@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>九宫格</title>
+</head>
+<body>
+  <!-- flex布局 -->
+  <!-- <style>
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 30%;
+    }
+
+    .item {
+      width: 30%;
+      height: 30%;
+      padding-top: 30%;
+      margin-top: 3%;
+      box-sizing: border-box;
+      background-color: salmon;
+      text-align: center;
+    }
+  </style> -->
+
+  <!-- grid布局 -->
+  <style>
+    .container {
+      display:grid;
+      grid-template-columns: 100px 100px 100px;
+      grid-template-rows: 100px 100px 100px;
+    }
+
+    .item {
+      font-size: 4em;
+      text-align: center;
+      background-color: salmon;
+    }
+
+    .item:nth-child(odd){
+      background-color: sandybrown;
+    }
+  </style>
+  <div class="container">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+  </div>
+
+  <!-- margin负值实现 -->
+  <!-- <style>
+    .container {
+      /* background-color: salmon; */
+      /* border: 1px solid sandybrown;
+      border-radius: 8px; */
+      width: 320px;
+    }
+
+    ul {
+      padding: 0;
+      overflow: hidden;
+      margin-right: -20px;
+      margin-bottom: -20px;
+      margin-top: 0;
+    }
+
+    .item {
+      list-style: none;
+      text-align: center;
+      line-height: 100px;
+      background-color:tomato;
+      border: 1px solid #ccc;
+      float: left;
+      width: 100px;
+      height: 100px;
+      /* margin-right: 10px;
+      margin-bottom: 10px; */
+    }
+  </style>
+  <div class="container">
+    <ul>
+      <li class="item">1</li>
+      <li class="item">2</li>
+      <li class="item">3</li>
+      <li class="item">4</li>
+      <li class="item">5</li>
+      <li class="item">6</li>
+      <li class="item">7</li>
+      <li class="item">8</li>
+      <li class="item">9</li>
+    </ul>
+  </div> -->
+
+  <!-- absolute布局 -->
+  <!-- <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .page {
+      position: absolute;
+      left: 0;
+      top: 10px;
+      right: 0;
+      bottom: 0;
+    }
+
+    .list {
+      float: left;
+      height: 33.3%;
+      width: 33.3%;
+      position: relative;
+    }
+
+    .list:before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 10px;
+      bottom: 10px;
+      border-radius: 10px;
+      background-color: #cad5eb;
+    }
+
+    .list:after {
+      content: attr(data-index);
+      position: absolute;
+      height: 30px;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+    }
+  </style>
+  <div class="page">
+    <div class="list" data-index="1">
+    </div>
+    <div class="list" data-index="2">
+    </div>
+    <div class="list" data-index="3">
+    </div>
+    <div class="list" data-index="4">
+    </div>
+    <div class="list" data-index="5">
+    </div>
+    <div class="list" data-index="6">
+    </div>
+    <div class="list" data-index="7">
+    </div>
+    <div class="list" data-index="8">
+    </div>
+    <div class="list" data-index="9">
+    </div>
+  </div> -->
+
+  <!-- table布局 -->
+  <!-- <style>
+    .table {
+      display: table;
+    }
+
+    .table li {
+      display: table-row;
+    }
+
+    li div {
+      background: #beffee;
+    }
+
+    .table li div {
+      width: 200px;
+      line-height: 200px;
+      display: table-cell;
+      text-align: center;
+    }
+
+    .table li:nth-child(odd) div:nth-child(even) {
+      background: #bec3ff;
+    }
+
+    .table li:nth-child(even) div:nth-child(odd) {
+      background: #bec3ff;
+    }
+  </style>
+  <ul class="table">
+    <li>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </li>
+    <li>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+    </li>
+    <li>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </li>
+  </ul> -->
+</body>
+</html>
