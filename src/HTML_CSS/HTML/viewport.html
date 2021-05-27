@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>元素是否在视窗范围之内</title>
+</head>
+
+<body>
+  <style>
+    .container {
+      height: 1000px;
+      width: 2000px;
+      background: #f1f1f1;
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+    }
+
+    .item {
+      width: 100px;
+      height: 100px;
+      background: coral;
+    }
+  </style>
+  <div class="container">
+    <div id="context" class="item">
+      内容区
+    </div>
+  </div>
+  <script>
+    const target = document.getElementById("context");
+
+    // {
+    //   // 第一种
+    //   function isInViewPort(element) {
+    //     const viewWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    //     const viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    //     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;//滚动条卷去的高度
+    //     const scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+    //     const elementOffsetTop = element.offsetTop;
+    //     const elementOffsetLeft = element.offsetLeft;
+
+    //     return elementOffsetTop < viewHeight + scrollTop && elementOffsetLeft < viewWidth + scrollLeft;
+    //   }
+
+    //   document.addEventListener("scroll", function () {
+    //     console.log("内容区是否在视窗范围内：", isInViewPort(target));
+    //   })
+    // }
+
+    {
+      // 第二种
+      function isInViewPort(element) {
+        const viewWidth = window.innerWidth || document.documentElement.clientWidth;
+        const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+        const {
+          top,
+          right,
+          bottom,
+          left,
+        } = element.getBoundingClientRect();
+
+        return (
+          top >= 0 &&
+          left >= 0 &&
+          right <= viewWidth &&
+          bottom <= viewHeight
+        );
+      }
+
+      document.addEventListener("scroll", function () {
+        console.log("内容区是否在视窗范围内：", isInViewPort(target));
+      })
+    }
+
+    {
+      // 第三种
+      const options = {
+        // 表示重叠面积占被观察者的比例，从 0 - 1 取值，
+        // 1 表示完全被包含
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      };
+      const callback = function (entries, observer) {
+        entries.forEach(entry => {
+          entry.time;               // 触发的时间
+          entry.rootBounds;         // 根元素的位置矩形，这种情况下为视窗位置
+          entry.boundingClientRect; // 被观察者的位置举行
+          entry.intersectionRect;   // 重叠区域的位置矩形
+          entry.intersectionRatio;  // 重叠区域占被观察者面积的比例（被观察者不是矩形时也按照矩形计算）
+          entry.target;             // 被观察者
+          if (entry.intersectionRatio > 0 && entry.intersectionRatio <= 1) {
+            console.log("内容区在视窗范围内");
+          } else {
+            console.log("内容区不在视窗范围内");
+          }
+          console.log('entry.intersectionRatio', entry, observer);
+        });
+      };
+      const observer = new IntersectionObserver(callback, options);
+      observer.observe(target);
+    }
+
+  </script>
+</body>
+
+</html>
