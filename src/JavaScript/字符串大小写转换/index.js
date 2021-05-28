@@ -12,9 +12,13 @@ function transfer(str) {
   // }
   // return result;
 
-  return str.replace(/[a-zA-Z]/g, (match) => {
-    return /[a-z]/.test(match) ? match.toUpperCase() : match.toLowerCase();
-  });
+  // return str.replace(/[a-zA-Z]/g, (match) => {
+  //   return /[a-z]/.test(match) ? match.toUpperCase() : match.toLowerCase();
+  // });
+
+  return str.replace(/(\w)/g, (m) =>
+    m === m.toUpperCase() ? m.toLowerCase() : m.toUpperCase()
+  );
 }
 
 console.log(transfer(str));
