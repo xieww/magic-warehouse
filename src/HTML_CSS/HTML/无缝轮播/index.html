@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul class="animation">
+  </ul>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script>
+
+  var actionStep = 1.5
+
+  var animationData = ['1', '2']
+
+  var domData = [...animationData, animationData[animationData.length - 1]]
+
+  $('.animation').append($(domData.map((val, index) => {
+    if (index === domData.length - 1) return `<!-- 为了撑起 animiation 元素 --><li class="animation-item animation-item-slot">${val}</li>`
+    return `<li class="animation-item animation-item-move animation-item-move-${index + 1}">${val}</li>`
+  }).join('')))
+
+  var dataLength = animationData.length
+
+  $('head').append(`<style>
+    .animation-item-move {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      transform: translateY(100%);
+      animation: ${dataLength * actionStep}s step-start 0s infinite running slidein;
+    }
+    ${animationData.map((v, index) => {
+    return `.animation-item-move-${index + 1} {
+          animation-delay: ${index * actionStep}s;
+        }
+      `
+  }).join('')}
+
+    @keyframes slidein {
+      0% {
+        transform: translateY(100%);
+        animation-timing-function: ease-in-out;
+      }
+
+      ${100 / dataLength}% {
+        transform: translateY(0%);
+        animation-timing-function: ease-in-out;
+      }
+
+      ${200 / dataLength}% {
+        transform: translateY(-100%);
+        animation-timing-function: step-start;
+      }
+    }
+
+    @keyframes slideinSlot {
+      0% {
+        transform: translateY(0);
+        animation-timing-function: ease-in-out;
+      }
+
+      100% {
+        transform: translateY(-100%);
+        animation-timing-function: step-start;
+      }
+    }
+
+    .animation-item-slot {
+      animation: ${actionStep}s slideinSlot;
+      transform: translateY(-100%);
+    }
+
+    .animation {
+      position: relative;
+      padding-left: 0;
+      text-align: center;
+      background-color: aqua;
+      overflow: hidden;
+    }
+    .animation-item {
+      list-style: none;
+      line-height: 50px;
+      height: 50px;
+    }
+  </style>`)
+</script>
+
+</html>

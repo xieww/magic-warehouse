@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>    
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .outer {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            overflow: hidden;
+            margin: 100px auto;
+        }
+
+        .innerBox {
+            position: absolute;
+            width: 9999em;
+            height: 200px;
+            /* background-color: red; */
+        }
+
+        .inner {
+            /* position: absolute; */
+            float: left;
+            width: 400px;
+            height: 200px;
+            font-size:25px;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <div class="innerBox">
+            <div class="inner" style="background-color: aqua;">1</div>
+            <div class="inner" style="background-color: aquamarine;">2</div>
+            <div class="inner" style="background-color: beige;">3</div>
+            <div class="inner" style="background-color: red;">4</div>
+            <div class="inner" style="background-color: blanchedalmond;">5</div>
+        </div>
+    </div>
+    <script>
+        var count = 0;
+        var inner = document.getElementsByClassName("inner");
+        var timer = null;
+        var innerBox = document.getElementsByClassName("innerBox")[0];
+        function move() {
+            innerBox.style.transition = '2s'
+                    innerBox.style.left = -400 * count +'px'
+            timer = setInterval(function (times) {
+                count++;
+                if (count > 4) {
+                    count = 0;
+                    inner[4].style.position = "absolute"
+                    inner[4].style.left = '-400px'
+                    inner[4].style.transition = '2s'
+                    innerBox.style.left = "0px"
+                    innerBox.style.transition = 'none'
+                } else {
+                    inner[4].style.position = "relative"
+                    inner[4].style.left = "0px"
+                    // inner[0].style.left = "0px"
+                    
+                    innerBox.style.transition = '2s'
+                    innerBox.style.left = -400 * count +'px'
+                }
+                
+            }, 2000)
+        }
+        move()
+    </script>
+</body>
+
+</html>
