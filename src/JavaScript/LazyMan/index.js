@@ -2,17 +2,17 @@ class Lazy {
   constructor(name) {
     this.name = name;
     this.queue = [];
-    console.log(`Hi I am ${name}`);
+    this._log(`Hi I am ${name}`);
     const timer = setTimeout(() => {
-      this.next();
+      this._next();
       clearTimeout(timer);
     }, 0);
   }
 
   eat(food) {
     const fn = () => {
-      console.log(`I am eating ${food}`);
-      this.next();
+      this._log(`I am eating ${food}`);
+      this._next();
     };
     this.queue.push(fn);
     return this;
@@ -21,9 +21,9 @@ class Lazy {
   delay(t) {
     return () => {
       const timer = setTimeout(() => {
-        console.log(`等待了${t}秒...`);
+        this._log(`等待了${t}秒...`);
         clearTimeout(timer);
-        this.next();
+        this._next();
       }, t * 1000);
     };
   }
@@ -38,9 +38,13 @@ class Lazy {
     return this;
   }
 
-  next() {
+  _next() {
     const fn = this.queue.shift();
     fn && fn();
+  }
+
+  _log(info) {
+    console.log(info);
   }
 }
 
