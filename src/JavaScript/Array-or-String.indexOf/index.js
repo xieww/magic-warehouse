@@ -1,7 +1,8 @@
 function _indexOf(item, searchValue, start = 0) {
   const DATA_TYPE = typeof item;
   if (DATA_TYPE !== "string" && !Array.isArray(item)) {
-    throw new TypeError("item should be array or string");
+    throw new TypeError(`${JSON.stringify(item)} should be array or string`);
+    // throw new TypeError(`${JSON.stringify(item)}.indexOf is not a function`);
   }
   if (DATA_TYPE === "string") {
     var regex = new RegExp(`${searchValue}`, "ig");
