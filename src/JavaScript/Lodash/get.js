@@ -21,6 +21,19 @@ const __get = (object, ...args) =>
     arg.match(/[^\.\[\]]+/g).reduce((res, prop) => res && res[prop], object)
   );
 
+function gets(source, path, defaultValue = undefined) {
+  // a[3].b -> a.3.b -> ['a', '3', 'b']
+  const paths = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+  let result = source;
+  for (const p of paths) {
+    result = Object(result)[p];
+    if (result === undefined) {
+      return defaultValue;
+    }
+  }
+  return result;
+}
+
 const obj = {
   selector: { to: { job: "FE Coder" } },
   target: [1, 2, { name: "byted" }],
