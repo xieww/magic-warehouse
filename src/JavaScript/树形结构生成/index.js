@@ -1,5 +1,10 @@
 const data = [
   {
+    id: 0,
+    name: "-1",
+    parentId: "",
+  },
+  {
     id: 1,
     name: "1",
     parentId: 0,
@@ -41,18 +46,34 @@ const data = [
   },
 ];
 
-function transfer(arr, parentId) {
+function buildChildren(arr, parentId) {
   const result = [];
   for (const item of arr) {
     if (item.parentId === parentId) {
-      const node = {};
-      node.id = item.id;
-      node.name = item.name;
-      node.children = transfer(arr, item.id);
+      const node = {
+        id: item.id,
+        name: item.name,
+        children: buildChildren(arr, item.id),
+      };
       result.push(node);
     }
   }
   return result;
 }
 
-console.log(transfer(data, 0));
+function transfer(arr) {
+  const result = [];
+  for (const item of arr) {
+    if (item.parentId === "") {
+      const node = {
+        id: item.id,
+        name: item.name,
+        children: buildChildren(arr, item.id),
+      };
+      result.push(node);
+    }
+  }
+  return result;
+}
+
+console.log(transfer(data));
