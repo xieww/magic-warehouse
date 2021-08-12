@@ -29,7 +29,7 @@ class U {
     const timer = setTimeout(() => {
       this._run();
       clearTimeout(timer);
-    });
+    }, 0);
   }
 
   console(val) {
@@ -46,12 +46,12 @@ class U {
     return this;
   }
 
-  _sleep(t) {
+  _sleep(timeout) {
     return () => {
       const timer = setTimeout(() => {
         clearTimeout(timer);
         this._run();
-      }, t);
+      }, timeout);
     };
   }
 
