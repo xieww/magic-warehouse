@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [tooltip] {
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+            border: 1px solid #ccc;
+            padding: 4px 6px;
+        }
+
+        [tooltip]::before {
+            content: "";
+            position: absolute;
+            border-width: 4px 6px 0 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-top-color: black;
+            z-index: 99;
+            opacity: 0;
+
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        [tooltip]::after {
+            content: attr(tooltip);
+            position: absolute;
+            background: black;
+            text-align: center;
+            color: #fff;
+            border-radius: 5px;
+            padding: 4px 2px;
+            min-width: 80px;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0;
+            transition: all 0.3s ease 0s;
+
+            left: 50%;
+            top: -5px;
+            transform: translateX(-50%) translateY(-100%);
+        }
+
+        [tooltip]:hover::after,
+        [tooltip]:hover::before {
+            opacity: 1;
+            transition: all 0.3s ease 0s;
+        }
+
+        /* 右侧 */
+        [tooltip][position='right']::before {
+            top: 50%;
+            left: 100%;
+            margin-left: -3px;
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        [tooltip][position='right']::after {
+            top: 50%;
+            left: 100%;
+            margin-left: 5px;
+            transform: translateY(-50%);
+        }
+
+        /* 左侧 */
+        [tooltip][position='left']::before {
+            top: 50%;
+            left: 0;
+            margin-left: -9px;
+            transform: translateY(-50%) rotate(-90deg);
+        }
+
+        [tooltip][position='left']::after {
+            top: 50%;
+            left: 0;
+            margin-left: -5px;
+            transform: translateY(-50%) translateX(-100%);
+        }
+
+        /* 底侧 */
+        [tooltip][position='bottom']::before {
+            top: 100%;
+            left: 50%;
+            margin-top: 1px;
+            transform: translatex(-50%) rotate(180deg);
+        }
+
+        [tooltip][position='bottom']::after {
+            top: 100%;
+            left: 50%;
+            margin-top: 5px;
+            transform: translatex(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div style="margin:60px;">
+        <div tooltip="love you">hover</div>
+        <br>
+        <div tooltip="love you" position="left">hover left</div>
+        <br>
+        <div tooltip="love you" position="right">hover right</div>
+        <br>
+        <div tooltip="love you" position="bottom">hover bottom</div>
+    </div>
+</body>
+</html>
