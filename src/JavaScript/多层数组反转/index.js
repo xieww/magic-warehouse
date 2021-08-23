@@ -5,29 +5,27 @@ function reverse(list) {
   let currentList = list;
   while (Array.isArray(currentList[1])) {
     refs.push(currentList);
-
     currentList = currentList[1];
   }
   refs.push(currentList);
 
-  let middle = null,
-    maxIndex = refs.length - 1,
-    halfLength = Math.floor(refs.length / 2);
+  const middle = Math.floor(refs.length / 2);
+  const maxIndex = refs.length - 1;
 
-  for (let i = 0; i < halfLength; i++) {
-    const left = refs[i],
-      right = refs[maxIndex - i];
+  for (let i = 0; i < middle; i++) {
+    const left = refs[i];
+    const right = refs[maxIndex - i];
 
     [left[0], right[0]] = [right[0], left[0]];
   }
 }
 
 // 二
-function fn (list) {
+function fn(list) {
   let val = null;
 
-  function* fn2 (v) {
-    if (typeof v[1] === 'string') {
+  function* fn2(v) {
+    if (typeof v[1] === "string") {
       val = v[1];
       yield v[0];
     } else {
@@ -63,6 +61,6 @@ function fn (list) {
 
 const data = [1, [2, [3, [4, [5, "null"]]]]];
 
-reverse(data)
+reverse(data);
 
 console.log(JSON.stringify(data));
