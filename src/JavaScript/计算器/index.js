@@ -1,13 +1,6 @@
-function Calculator(str) {
-  const stack1 = [];
-  const stack2 = [];
-  for (const s of str) {
-    console.log(s);
-  }
-}
 /**
  * 算术表达式求值 该类是一个能够解释给定字符串所表达的运算并计算得到结果的程序
- * 
+ *
  * 控制台输入一个需要计算的算术表达式：由左右括号、运算符、算术表达式组成的表达式 运算优先级有括号()确定。运算符支持+、-、*和接收一个参数的算术平方根。
  * 计算过程： 用两个栈：一个栈存运算符，一个存操作数 运算式忽略左括号 将操作数压栈 将运算符压栈
  * 在遇到右括号时，弹出一个运算符，弹出所需数量的操作数，并将运算符合操作数的运算结果压入操作数栈
@@ -27,7 +20,7 @@ function Calculator(str) {
 //           if (s.equals("(")) ;
 //           else if (s.equals("+")) {
 //               ops.push(s);
-//           } 
+//           }
 //           else if (s.equals("*")) {
 //               ops.push(s);
 //           } else if (s.equals("/")) {
@@ -60,4 +53,43 @@ function Calculator(str) {
 //   }
 // }
 
-console.log(Calculator("4*5+(8/4)-3"));
+function calculator(s) {
+  var q = [];
+  let n = "";
+  let f = "+";
+  let a = typeof s === "string" ? Array.from(s).reverse() : s;
+  while (a.length || n) {
+    var p = a.pop();
+    if (p === " ") {
+      continue;
+    }
+    if (p === "(") {
+      n = calculator(a);
+    } else if (/\D/.test(p)) {
+      switch (f) {
+        case "+":
+          q.push(n);
+          break;
+        case "-":
+          q.push(-n);
+          break;
+        case "*":
+          q.push(q.pop() * n);
+          break;
+        case "/":
+          q.push((q.pop() / n) | 0);
+      }
+      if (p === ")") {
+        break;
+      }
+      f = p;
+      n = "";
+    } else {
+      n += p;
+    }
+  }
+  return q.reduce((p, v) => p + (v | 0), 0);
+}
+
+console.log(calculator("4*5+(8/4)-3"));
+console.log(calculator("((2 + (3 * 2) ) * (2 + 3) + (3 - 1) )"));
