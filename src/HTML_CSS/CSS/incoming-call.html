@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #f50057;
+            --animation-curve: cubic-bezier(0.12, 0.7, 0.74, 0.71);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin-left: 50%;
+            margin-top: 15em;
+            height: 100vh;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone {
+            z-index: 2;
+            background-color: var(--pink);
+            animation: phone 1s var(--animation-curve) infinite alternate-reverse;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            border: 0.5px white solid;
+        }
+
+        .material-icons {
+            color: white;
+        }
+
+        div {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            animation: scaling 2s var(--animation-curve) infinite;
+        }
+
+        @keyframes scaling {
+            0% {
+                transform: scale(4);
+                background-color: var(--pink);
+            }
+
+            100% {
+                transform: scale(10);
+                background-color: rgba(245, 0, 182, 0);
+            }
+        }
+
+        @keyframes phone {
+            0% {
+                transform: scale(4);
+            }
+
+            100% {
+                transform: scale(4.5);
+            }
+        }
+
+        .circle1 {
+            animation-delay: 0s;
+        }
+
+        .circle2 {
+            animation-delay: 1s;
+        }
+    </style>
+</head>
+<body>
+    <div class='phone'>
+        <span class="material-icons">
+            call
+        </span>
+    </div>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+</body>
+</html>
