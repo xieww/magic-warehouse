@@ -36,7 +36,7 @@ function debounce(fn, delay = 500, immediate) {
       }
     } else {
       timer = setTimeout(() => {
-        result = fn.apply(this.args);
+        result = fn.apply(this, args);
       }, delay);
     }
     return result;
