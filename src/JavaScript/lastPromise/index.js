@@ -1,13 +1,13 @@
 function lastPromise(promiseFunction) {
-  lastPromise.quickCount = 0;
-  lastPromise.slowCount = 0;
+  let quickCount = 0;
+  let slowCount = 0;
 
   return function () {
-    lastPromise.quickCount++;
+    quickCount++;
     return new Promise((resolve) => {
       promiseFunction().then((v) => {
-        lastPromise.slowCount++;
-        if (lastPromise.quickCount === lastPromise.slowCount) {
+        slowCount++;
+        if (quickCount === slowCount) {
           resolve(v);
         }
       });
