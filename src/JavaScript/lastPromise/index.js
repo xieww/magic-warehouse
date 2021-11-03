@@ -4,7 +4,7 @@ function lastPromise(promiseFunction) {
 
   return function () {
     lastPromise.quickCount++;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       promiseFunction().then((v) => {
         lastPromise.slowCount++;
         if (lastPromise.quickCount === lastPromise.slowCount) {
@@ -18,7 +18,7 @@ function lastPromise(promiseFunction) {
 // function lastPromise(promiseFunction) {
 //   const temp = [];
 //   return function () {
-//     return new Promise((resolve, reject) => {
+//     return new Promise((resolve) => {
 //       temp.push(resolve);
 //       promiseFunction().then((r) => {
 //         if (temp.indexOf(resolve) === temp.length - 1) {
