@@ -16,21 +16,17 @@ function lastPromise(promiseFunction) {
 }
 
 // function lastPromise(promiseFunction) {
-//   const cbs = [];
-//   const promiseMap = {};
-//   return () => {
+//   const temp = [];
+//   return function () {
 //     return new Promise((resolve, reject) => {
-//       cbs.push(resolve);
-//       const p = promiseFunction();
-//       promiseMap[p] = resolve;
-//       p.then((r) => {
-//         if (cbs.indexOf(resolve) !== cbs.length - 1) {
-//           return;
+//       temp.push(resolve);
+//       promiseFunction().then((r) => {
+//         if (temp.indexOf(resolve) === temp.length - 1) {
+//           resolve(r);
 //         }
-//         resolve(r);
 //       });
 //     });
-//   }
+//   };
 // }
 
 // 示例
