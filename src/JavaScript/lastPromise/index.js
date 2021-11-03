@@ -42,6 +42,6 @@ let promiseFunction = () =>
     })
   );
 let lastFn = lastPromise(promiseFunction);
-lastFn().then(console.log); // 无输出
-lastFn().then(console.log); // 无输出
-lastFn().then(console.log); // 3
+lastFn().then(console.log); // 无输出 count = 1
+lastFn().then(console.log); // 无输出 count = 2
+lastFn().then(console.log); // 3 count = 3
