@@ -1,4 +1,6 @@
 const helper = (type, value) => ({ type, value });
+const isString = value => /^[a-zA-Z]+$/.test(value);
+const isNumber = value => /^[\d]+$/.test(value);
 
 function transfer(input) {
   const result = [];
@@ -13,14 +15,14 @@ function transfer(input) {
       result.push(helper("paren", item));
     } else if (/\w/.test(item)) {
       // 如果是数字
-      if (/^[\d]+$/.test(item) && !/^[\d]+$/.test(input[i + 1])) {
+      if (isNumber(item) && !isNumber(input[i + 1])) {
         const value = temp.join("") + item;
         result.push(helper("number", value));
         temp = [];
         continue;
       }
       // 如果是字母
-      if (/^[a-zA-Z]+$/.test(item) && !/^[a-zA-Z]+$/.test(input[i + 1])) {
+      if (isString(item) && !isString(input[i + 1])) {
         const value = temp.join("") + item;
         result.push(helper("name", value));
         temp = [];
