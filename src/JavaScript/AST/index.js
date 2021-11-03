@@ -53,6 +53,16 @@ function transfer(input) {
       result.push(helper("colon", item));
     } else if (item === "\"") {
       result.push(helper("slash", item));
+    } else if (item === "'") {
+      result.push(helper("singleQuote", item));
+    } else if (item === "\\") {
+      result.push(helper("backslash", item));
+    } else if (item === "`") {
+      result.push(helper("tick", item));
+    } else if (item === "~") {
+      result.push(helper("tilde", item));
+    } else if (item === "^") {
+      result.push(helper("caret", item));
     }
   }
   return result;
