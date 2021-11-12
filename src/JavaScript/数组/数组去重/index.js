@@ -50,6 +50,21 @@ function unique(array) {
 //     });
 // }
 
+// 双层for循环
+function unique(array) {
+  var result = [...array];
+  for (var i = 0; i < result.length; i++) {
+    for (var j = i + 1; j < result.length; j++) {
+      if (result[i] === result[j]) {
+        result.splice(j, 1);
+        j--;
+      }
+    }
+  }
+
+  return result;
+}
+
 var array = [1, 2, 1, 1, "1", "1"];
 
 console.log(unique(array));
