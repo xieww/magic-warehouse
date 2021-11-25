@@ -90,6 +90,17 @@ class ListNode {
 //       cur = cur.next;
 //     }
 //   }
+//   reverse() {
+//     let cur = this.head;
+//     let pre = null;
+//     while (cur) {
+//       const next = cur.next;
+//       cur.next = pre;
+//       pre = cur;
+//       cur = next;
+//     }
+//     this.head = pre;
+//   }
 // }
 
 // 解法2
@@ -181,6 +192,17 @@ class MyLinkedList {
       console.log(cur.val);
       cur = cur.next;
     }
+  }
+  reverse() {
+    let cur = this.head;
+    let pre = null;
+    while (cur !== null) {
+      let next = cur.next;
+      cur.next = pre;
+      pre = cur;
+      cur = next;
+    }
+    this.head = pre;
   }
 }
 
