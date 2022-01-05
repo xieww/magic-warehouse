@@ -24,17 +24,32 @@
 // 方式二
 Promise.retry = function (fn, num) {
   return new Promise(async (resolve, reject) => {
-    while (num) {
+    let count = 0;
+    while (count < num) {
       try {
-        const response = await fn();
-        resolve(response);
-      } catch (error) {
-        if (num === 1) {
-          reject(error);
-        }
-        num--;
+        resolve(await fn());
+        // break;
+      } catch (err) {
+        count++;
+        console.log(`第${count}次重试`);
       }
     }
+    if (count === num) {
+      reject(new Error("抱歉，多次重试失败，程序退出执行！"));
+    }
+
+    // while (num) {
+    //   try {
+    //     const response = await fn();
+    //     resolve(response);
+    //     break;
+    //   } catch (error) {
+    //     if (num === 1) {
+    //       reject(error);
+    //     }
+    //     num--;
+    //   }
+    // }
   });
 };
 
